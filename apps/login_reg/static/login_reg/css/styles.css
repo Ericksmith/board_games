@@ -1,0 +1,31 @@
+.welcomeForms {
+    width: 500px;
+    height: 400px;
+    border: 2px solid black;
+    display: inline-block
+}
+
+.logReg {
+    display: inline-block;
+    vertical-align: top;
+}
+
+#wrapper {
+    width: 1200px;
+}
+
+label{
+    display: inline-block;
+    clear: left;
+    width: 250px;
+    text-align: right;
+}
+
+input {
+  display: inline-block;
+
+}
+
+.formPush {
+    margin-left:200px;
+}

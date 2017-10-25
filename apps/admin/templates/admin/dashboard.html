@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Admin Dashboard</title>
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'admin/css/styles.css' %}">
+</head>
+<body>
+    <form action="searchProducts" method="post">
+        {% csrf_token %}
+        <input type="submit" value="hit me"> 
+    </form>
+    {% if games_search %}
+        {% for game in games_search %}
+            <p>{{game.id}}</p>
+            <p>{{game.title}}</p>
+            <p>{{game.year_published}}</p>
+        {% endfor %}
+    {% endif %}
+</body>
+</html>
