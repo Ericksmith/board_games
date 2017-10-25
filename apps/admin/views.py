@@ -30,7 +30,7 @@ def orders(request):
 #Form processing
 def searchProducts(request):
     if request.method == 'POST':
-        searchResults = requests.get("https://www.boardgamegeek.com/xmlapi/search?search=risk")
+        searchResults = requests.get("https://www.boardgamegeek.com/xmlapi/search?search={}".format(request.POST['search']))
         root = ET.fromstring(searchResults.content)
         games_list = []
         for game in root:
