@@ -7,7 +7,6 @@ import requests
 import xml.etree.ElementTree as ET
 from ..store.models import *
 from ..login_reg.models import User
-from PIL import Image
 
 
 
@@ -29,7 +28,7 @@ def addProduct(request):
     return render(request, 'admin/admin_add_game.html', context)
 
 def orders(request):
-    pass
+    return render(request, 'admin/orders.html')
 
 
 #Form processing
@@ -56,12 +55,15 @@ def searchProducts(request):
 def select_game(request, game_id):
     resp = requests.get("https://bgg-json.azurewebsites.net/thing/{}".format(game_id))
     game = json.loads(resp.text)
-    print(game)
+    desc = game['description']
+    desc.rstrip('&#10;')
+    desc.rstrip('&mdash;')
+    desc.rstrip('&quot;')
     game_to_add = {
         'playtime': game['playingTime'],
         'minplayers': game['minPlayers'],
         'maxplayers': game['maxPlayers'],
-        'description': game['description'],
+        'description': desc,
         'thumbnail': game['thumbnail'],
         'image': game['image'],
         'yearpublished': game['yearPublished'],

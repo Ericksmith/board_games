@@ -26,8 +26,8 @@ class Game(models.Model):
     description = models.TextField()
     price = models.SmallIntegerField()
     sale_price = models.SmallIntegerField()
-    thumbnail = models.ImageField()
-    image = models.ImageField()
+    thumbnail = models.URLField(max_length=255)
+    image = models.URLField(max_length=255)
     classic = models.BooleanField()
     catagory = models.ManyToManyField(Catagory, related_name='games')
     created_at = models.DateField(auto_now_add=True)
@@ -36,7 +36,7 @@ class Game(models.Model):
 
 class Order(models.Model):
     status = models.CharField(max_length=255)
-    items = models.ForeignKey(Game, related_name='game_orders')
+    items = models.ManyToManyField(Game, related_name='game_orders')
     customer = models.ForeignKey(User, related_name='user_orders')
     created_at = models.DateField(auto_now_add=True)
     updated_at = models.DateField(auto_now=True)
