@@ -7,6 +7,8 @@ import requests
 import xml.etree.ElementTree as ET
 from ..store.models import *
 from ..login_reg.models import User
+from PIL import Image
+
 
 
 #page renders
@@ -83,11 +85,12 @@ def create_game(request):
             classic = True
         else:
             classic = False
-        newGame = Game(title = data['title'], publisher = data['publisher'], yearpublished = data['yearpublished'], minplayers=data['minplayers'], maxplayers = data['maxplayers'], playtime = data['playtime'], description= data['description'], price= data['price'], sale_price= data['sale_price'], classic = classic)
+        newGame = Game(title = data['title'], publisher = data['publisher'], yearpublished = int(data['yearpublished']), minplayers= int(data['minplayers']), maxplayers = int(data['maxplayers']), playtime = int(data['playtime']), description= data['description'], price= int(data['price']), sale_price= float(data['sale_price']), classic = classic)
         newGame.save()
+        # **********TOO BE ADDED LATER***********
         #  thumbnail= data['thumbnail'], image=data['image'],
-        cats = data.POST['catagory']
-        for cat in cats:
-            cat_to_add = Catagory.objects.filter(name=cat)
-            newGame.add(cat_to_add)
+        # cats = data.POST['catagory']
+        # # for cat in cats:
+        # #     cat_to_add = Catagory.objects.filter(name=cat)
+        # #     newGame.add(cat_to_add)
         return redirect(dashboard)
