@@ -6,7 +6,9 @@ from django.contrib import messages
 import requests
 import xml.etree.ElementTree as ET
 from ..store.models import *
+from .models import cleanDesc
 from ..login_reg.models import User
+from decimal import Decimal
 
 
 
@@ -17,14 +19,16 @@ def dashboard(request):
 def addProduct(request):
     if request.session.get('games_search') is not None:
         context = {
-            'games_search': request.session['games_search']
+            'games_search': request.session.get('games_search')
         }
         del request.session['games_search']
+        print('first if')
     else:
         context = {
             'games_search': False,
-            'selected_game': request.session['selected_game']
+            'selected_game': request.session.get('selected_game')
         }
+        print('second if')
     return render(request, 'admin/admin_add_game.html', context)
 
 def orders(request):
@@ -56,9 +60,7 @@ def select_game(request, game_id):
     resp = requests.get("https://bgg-json.azurewebsites.net/thing/{}".format(game_id))
     game = json.loads(resp.text)
     desc = game['description']
-    desc.rstrip('&#10;')
-    desc.rstrip('&mdash;')
-    desc.rstrip('&quot;')
+    desc = cleanDesc(desc)
     game_to_add = {
         'playtime': game['playingTime'],
         'minplayers': game['minPlayers'],
@@ -87,10 +89,9 @@ def create_game(request):
             classic = True
         else:
             classic = False
-        newGame = Game(title = data['title'], publisher = data['publisher'], yearpublished = int(data['yearpublished']), minplayers= int(data['minplayers']), maxplayers = int(data['maxplayers']), playtime = int(data['playtime']), description= data['description'], price= int(data['price']), sale_price= float(data['sale_price']), classic = classic)
+        newGame = Game(title = data['title'], publisher = data['publisher'], yearpublished = int(data['yearpublished']), thumbnail= data['thumbnail'], image=data['image'], minplayers= int(data['minplayers']), maxplayers = int(data['maxplayers']), playtime = int(data['playtime']), description= data['description'], price= Decimal(data['price']), sale_price= Decimal(data['sale_price']), classic = classic)
         newGame.save()
         # **********TOO BE ADDED LATER***********
-        #  thumbnail= data['thumbnail'], image=data['image'],
         # cats = data.POST['catagory']
         # # for cat in cats:
         # #     cat_to_add = Catagory.objects.filter(name=cat)
