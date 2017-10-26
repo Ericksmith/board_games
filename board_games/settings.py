@@ -41,6 +41,7 @@ INSTALLED_APPS = [
     'apps.admin',
     'apps.store',
     'apps.login_reg',
+    'apps.checkout',
 ]
 
 PASSWORD_HASHERS = [
