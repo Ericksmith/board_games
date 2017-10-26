@@ -1,6 +1,13 @@
 # -*- coding: utf-8 -*-
 from __future__ import unicode_literals
 from django.db import models
+from ..login_reg.models import User
+
+
+#Managers
+class GameManager(models.Manager):
+    def validator(request, postData):
+        pass
 
 # Create your models here.
 class Catagory(models.Model):
@@ -12,7 +19,7 @@ class Catagory(models.Model):
 class Game(models.Model):
     title = models.CharField(max_length=255)
     publisher = models.CharField(max_length=255)
-    yearpublished = models.DateField()
+    yearpublished = models.SmallIntegerField()
     minplayers = models.SmallIntegerField()
     maxplayers = models.SmallIntegerField()
     playtime = models.SmallIntegerField()
@@ -25,4 +32,11 @@ class Game(models.Model):
     catagory = models.ManyToManyField(Catagory, related_name='games')
     created_at = models.DateField(auto_now_add=True)
     updated_at = models.DateField(auto_now=True)
+    objects = GameManager()
 
+class Order(models.Model):
+    status = models.CharField(max_length=255)
+    items = models.ForeignKey(Game, related_name='game_orders')
+    customer = models.ForeignKey(User, related_name='user_orders')
+    created_at = models.DateField(auto_now_add=True)
+    updated_at = models.DateField(auto_now=True)

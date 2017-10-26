@@ -2,11 +2,14 @@
 from __future__ import unicode_literals
 import json
 from django.shortcuts import render, redirect
-# from login_reg.models import User
+from django.contrib import messages
 import requests
 import xml.etree.ElementTree as ET
+from ..store.models import *
+from ..login_reg.models import User
+from PIL import Image
 
-# Create your views here.
+
 
 #page renders
 def dashboard(request):
@@ -67,19 +70,27 @@ def select_game(request, game_id):
         'rating': game['bggRating'],
         'rank': game['rank']
     }
-
-    # selected_game = requests.get("https://www.boardgamegeek.com/xmlapi/boardgame/{}".format(game_id))
-    # game = ET.fromstring(selected_game.content)
-    # game_to_add = {
-    #     'playtime': game[0].find('playingtime').text,
-    #     'minplayers': game[0].find('minplayers').text,
-    #     'maxplayers': game[0].find('maxplayers').text,
-    #     'description': game[0].find('description').text,
-    #     'thumbnail': game[0].find('thumbnail').text,
-    #     'image': game[0].find('image').text,
-    #     'yearpublished': game[0].find('yearpublished').text,
-    #     'title': game[0].find('name').text,
-    #     'publisher': game[0].find('boardgamepublisher').text,
-    # }
     request.session['selected_game'] = game_to_add
     return redirect(addProduct)
+
+def create_game(request):
+    if request.method == 'POST':
+        errors = Game.objects.validator(request.POST)
+        if errors:
+            for error in errors:
+                messages.error(request, error)
+            return redirect(addProduct)
+        data = request.POST
+        if data.get('classic') == 'True':
+            classic = True
+        else:
+            classic = False
+        newGame = Game(title = data['title'], publisher = data['publisher'], yearpublished = int(data['yearpublished']), minplayers= int(data['minplayers']), maxplayers = int(data['maxplayers']), playtime = int(data['playtime']), description= data['description'], price= int(data['price']), sale_price= float(data['sale_price']), classic = classic)
+        newGame.save()
+        # **********TOO BE ADDED LATER***********
+        #  thumbnail= data['thumbnail'], image=data['image'],
+        # cats = data.POST['catagory']
+        # # for cat in cats:
+        # #     cat_to_add = Catagory.objects.filter(name=cat)
+        # #     newGame.add(cat_to_add)
+        return redirect(dashboard)
