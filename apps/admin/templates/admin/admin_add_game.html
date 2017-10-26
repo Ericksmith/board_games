@@ -60,6 +60,8 @@
                     <p>Price: <input type="text" name="price"></p>
                     <p>Sale Price: <input type="text" name="sale_price"> leave blank if not on sale</p>
                     <p>Classic <input type="checkbox" name="classic" value='True'></p>
+                    <input type="hidden" name="thumbnail" value='{{selected_game.thumbnail}}'>
+                    <input type="hidden" name="image" value='{{selected_game.image}}'>
                     <input type="submit" value="Add game to database">
                 </form>
             {% endif %}
