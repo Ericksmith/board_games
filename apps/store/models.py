@@ -36,7 +36,7 @@ class Game(models.Model):
 
 class Order(models.Model):
     status = models.CharField(max_length=255)
-    items = models.ForeignKey(Game, related_name='games_orders')
-    customer = models.ForeignKey(User, related_name='users_orders')
+    items = models.ForeignKey(Game, related_name='game_orders')
+    customer = models.ForeignKey(User, related_name='user_orders')
     created_at = models.DateField(auto_now_add=True)
     updated_at = models.DateField(auto_now=True)
