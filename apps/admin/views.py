@@ -98,5 +98,5 @@ def create_game(request):
         return redirect(dashboard)
 
 def editSearch(request):
-    #single game in context will be called "game"
+    #single game in context will be called "game" 
     pass
