@@ -22,13 +22,11 @@ def addProduct(request):
             'games_search': request.session.get('games_search')
         }
         del request.session['games_search']
-        print('first if')
     else:
         context = {
             'games_search': False,
             'selected_game': request.session.get('selected_game')
         }
-        print('second if')
     return render(request, 'admin/admin_add_game.html', context)
 
 def orders(request):
@@ -77,6 +75,7 @@ def select_game(request, game_id):
     request.session['selected_game'] = game_to_add
     return redirect(addProduct)
 
+
 def create_game(request):
     if request.method == 'POST':
         errors = Game.objects.validator(request.POST)
@@ -89,7 +88,7 @@ def create_game(request):
             classic = True
         else:
             classic = False
-        newGame = Game(title = data['title'], publisher = data['publisher'], yearpublished = int(data['yearpublished']), thumbnail= data['thumbnail'], image=data['image'], minplayers= int(data['minplayers']), maxplayers = int(data['maxplayers']), playtime = int(data['playtime']), description= data['description'], price= Decimal(data['price']), sale_price= Decimal(data['sale_price']), classic = classic)
+        newGame = Game(title = data['title'], publisher = data['publisher'], yearpublished = int(data['yearpublished']), thumbnail= data['thumbnail'], image=data['image'], minplayers= int(data['minplayers']), maxplayers = int(data['maxplayers']), playtime = int(data['playtime']), description= data['description'], price= data['price'], sale_price= data['sale_price'], classic = classic)
         newGame.save()
         # **********TOO BE ADDED LATER***********
         # cats = data.POST['catagory']
@@ -97,3 +96,7 @@ def create_game(request):
         # #     cat_to_add = Catagory.objects.filter(name=cat)
         # #     newGame.add(cat_to_add)
         return redirect(dashboard)
+
+def editSearch(request):
+    #single game in context will be called "game"
+    pass
