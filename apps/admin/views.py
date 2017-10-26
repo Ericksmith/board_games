@@ -32,6 +32,14 @@ def addProduct(request):
 def orders(request):
     return render(request, 'admin/orders.html')
 
+def edit_game(request):
+
+    context = {
+        "game": Game.objects.get(id=2),
+        "categories": Catagory.objects.all(),
+    }
+
+    return render(request, 'admin/admin_edit.html', context)
 
 #Form processing
 def searchProducts(request):
