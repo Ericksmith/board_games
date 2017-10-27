@@ -80,8 +80,6 @@ def select_game(request, game_id):
         'rating': str(int(game['bggRating'])),
         'rank': game['rank']
     }
-    print(game['bggRating'])
-    print(game['rank'])
     request.session['selected_game'] = game_to_add
     return redirect(addProduct)
 
