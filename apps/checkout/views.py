@@ -12,7 +12,7 @@ from decimal import Decimal
 #renders
 def cart(request):
     if request.session.get('cart') is not None:
-        cart = { '1': 1, '2' : 2 }
+        cart = { '1': 4, '2' : 2 }
         # cart = request.session['cart']
         games_to_buy = []
         x = 0
