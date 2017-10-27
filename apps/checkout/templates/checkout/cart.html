@@ -18,7 +18,7 @@
                         <div>
                             {{game.game_object.title}}
                             {{game.subtotal}}
-                            <select>
+                            <select name ='order{{game.game_object.id}}'>
                                 '{{game.quantity|safe}}'
                             </select>
                         </div>
@@ -26,7 +26,7 @@
                     <p>{{total}}</p>
                     <input type="submit" value="Update Cart">
             </form>
-            <a href="checkout/confirm"><button>Continue to checkout</button></a>
+            <a href="confirm"><button>Continue to checkout</button></a>
             {% else %}
                 <p>Your cart is currently empty.</p>
             {% endif %}
