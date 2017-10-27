@@ -77,9 +77,11 @@ def select_game(request, game_id):
         'yearpublished': game['yearPublished'],
         'title': game['name'],
         'publisher': game['publishers'][0],
-        'rating': game['bggRating'],
+        'rating': str(int(game['bggRating'])),
         'rank': game['rank']
     }
+    print(game['bggRating'])
+    print(game['rank'])
     request.session['selected_game'] = game_to_add
     return redirect(addProduct)
 
@@ -97,7 +99,7 @@ def create_game(request):
         else:
             classic = False
         try:
-            newGame = Game(title = data['title'], publisher = data['publisher'], yearpublished = int(data['yearpublished']), thumbnail= data['thumbnail'], image=data['image'], minplayers= int(data['minplayers']), maxplayers = int(data['maxplayers']), playtime = int(data['playtime']), description= data['description'], price= data['price'], sale_price= data['sale_price'], classic = classic)
+            newGame = Game(title = data['title'], publisher = data['publisher'], rating=data['rating'], rank=data['rank'], yearpublished = int(data['yearpublished']), thumbnail= data['thumbnail'], image=data['image'], minplayers= int(data['minplayers']), maxplayers = int(data['maxplayers']), playtime = int(data['playtime']), description= data['description'], price= data['price'], sale_price= data['sale_price'], classic = classic)
             newGame.save()
         except:
             messages.error(request, 'Unable to add game, please check all fields')
