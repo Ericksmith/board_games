@@ -5,7 +5,9 @@ from .models import User
 from django.contrib import messages
 
 # Create your views here.
-def sign_in(request):
+def sign_in(request, page_id=10):
+    request.session['page_id'] = page_id
+    print(request.session['page_id'])
     return render(request, 'login_reg/sign-in.html')
 
 
@@ -21,11 +23,14 @@ def register(request):
             if errors.get('password') is not None:
                 for error in errors['password']:
                     messages.error(request, error)
-            return redirect#(####FILL IN###)
+            return redirect('/sign-in/' + request.session.get('page_id'))
     hashed_password = User.objects.password_hasher(request.POST['password'])
-    User.objects.create(name=request.POST['name'], alias=request.POST['alias'], email=request.POST['email'], birthday=request.POST['birthday'], password=hashed_password)
+    User.objects.create(first_name=request.POST['first_name'], last_name=request.POST['last_name'], email=request.POST['email'],  password=hashed_password)
     request.session['id'] = User.objects.get(email=request.POST['email']).id
-    return redirect#(####FILL IN###)
+    if request.session.get('page_id') == '1':
+        return redirect('/checkout/cart')
+    else:
+        return redirect('/')
 
 def login(request):
     if request.method == 'POST':
@@ -33,13 +38,16 @@ def login(request):
         if user:
             if User.objects.password_checker(request.POST['password'], user[0].password):
                 request.session['id'] = user[0].id
-                return redirect#(####FILL IN###)
+                if request.session.get('page_id') == '1':
+                    return redirect('/checkout/cart')
+                else:
+                    return redirect('/')
             else:
-                return redirect#(####FILL IN###)
+                return redirect(sign_in)
         else:
             messages.warning(request, 'Email did not match password')
-            return redirect#(####FILL IN###)
+            return redirect(sign_in)
 
 def logout(request):
     del request.session['id']
-    return redirect#(####FILL IN###)
+    return redirect('/')
