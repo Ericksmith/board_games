@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+       <meta charset="UTF-8">
+       <title>Results</title>
+       <link rel="stylesheet" type="text/css" href="../static/store/style.css">
+    </head>
+    <body>
+        <div id="wrapper">
+            <div id="topbar">
+                <a href=""><img id='logo' src="../static/store/images/bt_logo.png" alt=""></a>
+                <a href="" id='login_ns'>Login</a> | <a href="">Cart</a>
+            </div>
+            <div id='results_main'>
+                <h1>Results for {{request.session.search}}</h1>
+                {% for game in games %}
+                    <a href="">
+                        <div class='subgames'>
+                            <img src="{{game.thumbnail}}" alt="">
+                            <p class='black'>{{game.title}}</p>
+                            {% if game.sale_price%}
+                                <p><span class='sale_item'>${{game.price}}</span> ${{game.sale_price}}</p>
+                            {% else %}
+                                <p>${{game.price}}</p>
+                            {% endif %}                                   
+                        </div>
+                    </a>
+                {% endfor %}
+            </div>
+        </div>
+    </body>
+</html>
