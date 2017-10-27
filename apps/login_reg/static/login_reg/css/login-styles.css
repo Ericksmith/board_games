@@ -10,9 +10,7 @@
     vertical-align: top;
 }
 
-#wrapper {
-    width: 1200px;
-}
+
 
 label{
     display: inline-block;
@@ -28,4 +26,20 @@ input {
 
 .formPush {
     margin-left:200px;
+}
+
+#wrapper{
+    width: 1100px;
+    margin: auto;
+    /* border: 1px solid black; */
+}
+
+#topbar{
+    background: linear-gradient(to right, transparent, #2f7051, transparent);
+    height: 80px; 
+}
+#logo{
+    width: 200px;
+    margin-top: 5px;
+    margin-left: 10px;
 }

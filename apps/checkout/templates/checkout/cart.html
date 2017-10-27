@@ -11,7 +11,7 @@
 <body>
     <div id='wrapper'>
             <div id='topbar'>
-                <img id='logo' src="../static/store/images/bt_logo.png" alt="">
+                <a href="/"><img id='logo' src="../static/store/images/bt_logo.png" alt=""></a>
                 {% if request.session.id %}
                 <a href="/sign-in/logout" id='login'>Logout</a>
                 {% else %}
@@ -52,6 +52,9 @@
                         data-image="https://stripe.com/img/documentation/checkout/marketplace.png"
                         data-locale="auto">
                     </script>
+                </form>
+                <form action="order-placed" method="post">
+                    <input type="submit" value="Production Checkout" name='proCheckout'>
                 </form>
                     {% else%}
                         <a href="/sign-in/1"><button>Please sign-in to purchase</button></a>
