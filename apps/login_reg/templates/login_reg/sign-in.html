@@ -6,11 +6,15 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Sign in</title>
     {% load static %}
-    <link rel="stylesheet" href="{% static 'login-reg/css/styles.css' %}">
+    <link rel="stylesheet" href="{% static 'login_reg/css/login-styles.css' %}">
 </head>
 <body>
     <div id='wrapper'>
-        <h1>Welcome</h1>
+        <div id='topbar'>
+            <a href="/"><img id='logo' src="../static/store/images/bt_logo.png" alt=""></a>
+        </div>
+        <div>
+        
         {% if messages %}
         <ul class="messages">
             {% for message in messages %}
@@ -40,6 +44,7 @@
             <p><input type="submit" value="Login" class='formPush'></p>
         </form>
         </div>
+    </div>
     </div>
 </body>
 </html>

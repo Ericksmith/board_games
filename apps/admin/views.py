@@ -19,9 +19,9 @@ def dashboard(request):
 def addProduct(request):
     if request.session.get('games_search') is not None:
         context = {
-            'games_search': request.session.get('games_search')
+            'games_search': request.session.get('games_search'),
+            'selected_game': request.session.get('selected_game')
         }
-        del request.session['games_search']
     else:
         context = {
             'games_search': False,
