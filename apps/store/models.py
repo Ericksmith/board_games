@@ -28,6 +28,8 @@ class Game(models.Model):
     sale_price = models.CharField(max_length=30)
     thumbnail = models.URLField(max_length=255)
     image = models.URLField(max_length=255)
+    rank = models.CharField(max_length=30, default='80')
+    rating = models.CharField(max_length=30, default='7')
     classic = models.BooleanField()
     catagory = models.ManyToManyField(Catagory, related_name='games')
     created_at = models.DateField(auto_now_add=True)
