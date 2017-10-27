@@ -17,6 +17,7 @@ from django.conf.urls import url, include
 from django.contrib import admin
 
 urlpatterns = [
+    url(r'^$', include('apps.store.urls')),
     url(r'^admin/', include('apps.admin.urls')),
     url(r'^sign-in', include('apps.login_reg.urls')),
     # url(r'^', include('apps.store.urls')),

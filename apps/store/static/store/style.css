@@ -1,0 +1,187 @@
+*{
+    font-family: Georgia, serif;
+}
+
+a{
+    text-decoration: none;
+    color: #2f7051;
+}
+form{
+    display: inline-block;
+}
+
+ul{
+    list-style-type: none;
+    padding-left: 20px;
+}
+
+.black{
+    color: black;
+}
+
+.center{
+    text-align: center;
+}
+
+#wrapper{
+    width: 1100px;
+    margin: auto;
+    /* border: 1px solid black; */
+}
+
+.category{
+    font-family: Georgia, serif;
+    font-size: 16px;
+    border: none;
+    background: white;
+    color: #2f7051;
+    padding: 0;
+}
+
+/* ----------topbar----------- */
+
+#topbar{
+    background: linear-gradient(to right, transparent, #2f7051, transparent);
+    height: 80px; 
+}
+#logo{
+    width: 200px;
+    margin-top: 5px;
+    margin-left: 10px;
+}
+
+
+#search_bar{
+    vertical-align: top;
+    width: 350px;
+    height: 16px;
+    border-radius: 10px;
+    padding: 10px;
+    font-size: 14px;
+    background-color: #cedbd4;
+    margin-top: 20px;    
+    margin-left: 150px;
+    margin-right: 5px;
+    border-style: solid;
+    border-color: #4d8c6a;
+}
+
+#search_btn{
+    vertical-align: top;    
+    height: 46px;
+    border-radius: 25px;
+    background-color: #2f7051;
+    color: white;
+    margin-left: 0;
+    margin-top: 17px;
+    border-style: solid;
+    border-color: #4d8c6a;
+    
+}
+
+#login{
+    margin-left: 175px;
+}
+
+#login_ns{
+    margin-left: 763px;
+}
+
+/* -----------index---------- */
+
+#browse{
+    display: inline-block;
+    width: 180px;
+    margin: 10px;
+}
+
+#main{
+    display: inline-block;
+    vertical-align: top;
+    padding: 10px;
+}
+
+#featured{
+    display: inline-block;
+    margin-right: 10px;
+}
+
+#new_block{
+    display: inline-block;
+    vertical-align: top;
+}
+
+.new{
+    width: 272px;
+    display: block;
+    margin-bottom: 15px;
+}
+
+.subhead{
+    background: linear-gradient(to right, transparent, #2f7051, transparent);
+    color: white;
+    text-align: center;
+    padding: 5px;
+    font-size: 20px;
+    margin: 8px 0;
+    /* border: 1px solid black; */
+}
+
+.subgames{
+    display: inline-block;
+    text-align: center;
+    width: 160px;
+    margin: 0px 5px;
+    /* border: 1px solid black; */
+}
+
+.subgames>img{
+    width: 100px;
+}
+
+.subgames>p{
+    margin: 5px 0;
+}
+
+.sale_price{
+    color: red;
+    font-size: 12px;
+}
+
+/* --------game page--------- */
+
+#gp_main{
+    margin-left: 110px;
+}
+
+#gp_left{
+    display: inline-block;
+    text-align: right;
+    margin: 30px;
+}
+
+.gp_image{
+    width: 300px;
+}
+
+#gp_text{
+    display: inline-block;
+    vertical-align: top;
+    width: 500px;
+}
+
+.unsale_price{
+    text-decoration: line-through;
+}
+
+#add_to_cart{
+    width: 110px;
+    padding: 10px;
+    font-size: 15px;
+    background-color: #2f7051;
+    color: white;
+    border-style: solid;
+    border-color: #4d8c6a;
+    border-radius: 5px;
+
+}

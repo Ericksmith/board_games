@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+       <meta charset="UTF-8">
+       <title>Index</title>
+       <link rel="stylesheet" type="text/css" href="../static/store/style.css">
+    </head>
+    <body>
+        <div id="bg">
+            <div id='wrapper'>
+                <div id='topbar'>
+                    <img id='logo' src="../static/store/images/bt_logo.png" alt="">
+                    <form action=""></form>
+                        <input type="text" id="search_bar" name='search' placeholder="Search for a game">
+                        <input type="submit" value='search' id='search_btn'>
+                    </form>
+                    <a href="" id='login'>Login</a> | <a href="">Cart</a>
+                </div>
+                <div id="browse">
+                    <h3>Browse by Category</h3>
+                    <ul>
+                        <li><form action="">
+                                <input type="hidden" name='category' value='adventure'>
+                                <input class='category' type="submit" value='Adventure'>
+                            </form>
+                        </li>
+                        <li><form action="">
+                                <input type="hidden" name='category' value='book'>
+                                <input class='category' type="submit" value='Book'>
+                            </form>
+                        </li>
+                        <li><form action="">
+                                <input type="hidden" name='category' value='card_game'>
+                                <input class='category' type="submit" value='Card Game'>
+                            </form>
+                        </li>
+                        <li><form action="">
+                                <input type="hidden" name='category' value='city_building'>
+                                <input class='category' type="submit" value='City Building'>
+                            </form>
+                        </li>
+                        <li><form action="">
+                                <input type="hidden" name='category' value='civilization'>
+                                <input class='category' type="submit" value='Civilization'>
+                            </form>
+                        </li>
+                        <li><form action="">
+                                <input type="hidden" name='category' value='economic'>
+                                <input class='category' type="submit" value='Economic'>
+                            </form>
+                        </li>
+                        <li><form action="">
+                                <input type="hidden" name='category' value='exploration'>
+                                <input class='category' type="submit" value='Exploration'>
+                            </form>
+                        </li>
+                        <li><form action="">
+                                <input type="hidden" name='category' value='fantasy'>
+                                <input class='category' type="submit" value='Fantasy'>
+                            </form>
+                        </li>
+                        <li><form action="">
+                                <input type="hidden" name='category' value='farming'>
+                                <input class='category' type="submit" value='Farming'>
+                            </form>
+                        </li>
+                        <li><form action="">
+                                <input type="hidden" name='category' value='fighting'>
+                                <input class='category' type="submit" value='Fighting'>
+                            </form>
+                        </li>
+                        <li><form action="">
+                                <input type="hidden" name='category' value='horror'>
+                                <input class='category' type="submit" value='Horror'>
+                            </form>
+                        </li>
+                        <li><form action="">
+                                <input type="hidden" name='category' value='murder_mystery'>
+                                <input class='category' type="submit" value='Murder/Mystery'>
+                            </form>
+                        </li>
+                        <li><form action="">
+                                <input type="hidden" name='category' value='negotiation'>
+                                <input class='category' type="submit" value='Negotiation'>
+                            </form>
+                        </li>
+                        <li><form action="">
+                                <input type="hidden" name='category' value='puzzle'>
+                                <input class='category' type="submit" value='Puzzle'>
+                            </form>
+                        </li>
+                        <li><form action="">
+                                <input type="hidden" name='category' value='racing'>
+                                <input class='category' type="submit" value='Racing'>
+                            </form>
+                        </li>
+                        <li><form action="">
+                                <input type="hidden" name='category' value='territory_building'>
+                                <input class='category' type="submit" value='Territory Building'>
+                            </form>
+                        </li>
+                    </ul>
+                    <a href="">Advanced Search</a>
+                </div>
+                <div id="main">
+                    <a id='featured' href=""><img src="../static/store/images/featured1.jpg" alt=""></a>
+                    <div id="new_block">
+                        <a class='new' href=""><img class='new' src="../static/store/images/featured2.jpg" alt=""></a>
+                        <a class='new' href=""><img class='new' src="../static/store/images/featured3.jpg" alt=""></a>
+                    </div>
+                    <div name='sale'>
+                        <p class='subhead'>On Sale Now!</p>
+                            {% for game in sale %}
+                                <a href="">
+                                    <div class='subgames'>
+                                        <img src="{{game.thumbnail}}" alt="">
+                                        <p class='black'>{{game.title}}</p>
+                                        <p>${{game.sale_price}} <span class='sale_price'>was {{game.price}}</span></p>
+                                    </div>
+                                </a>
+                            {% endfor %}
+                    <div name='popular'>
+                        <p class='subhead'>Popular Games</p>
+                        <div class='subgames'></div>
+                    </div>
+                    <div name='classics'>
+                        <p class='subhead'>Classics</p>
+                            {% for game in classics %}
+                                <a href="">
+                                    <div class='subgames'>
+                                        <img src="{{game.thumbnail}}" alt="">
+                                        <p class='black'>{{game.title}}</p>
+                                        <p>${{game.price}}</p>                                   
+                                    </div>
+                                </a>
+                            {% endfor %}
+                    </div>
+                    <div name='recent'>
+                        <p class='subhead'>Recently Viewed</p>
+                        <div class='subgames'></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </body>
+</html>
