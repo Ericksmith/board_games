@@ -96,14 +96,19 @@ def create_game(request):
             classic = True
         else:
             classic = False
-        newGame = Game(title = data['title'], publisher = data['publisher'], yearpublished = int(data['yearpublished']), thumbnail= data['thumbnail'], image=data['image'], minplayers= int(data['minplayers']), maxplayers = int(data['maxplayers']), playtime = int(data['playtime']), description= data['description'], price= data['price'], sale_price= data['sale_price'], classic = classic)
-        newGame.save()
+        try:
+            newGame = Game(title = data['title'], publisher = data['publisher'], yearpublished = int(data['yearpublished']), thumbnail= data['thumbnail'], image=data['image'], minplayers= int(data['minplayers']), maxplayers = int(data['maxplayers']), playtime = int(data['playtime']), description= data['description'], price= data['price'], sale_price= data['sale_price'], classic = classic)
+            newGame.save()
+        except:
+            messages.error(request, 'Unable to add game, please check all fields')
+            return redirect(addProduct)
         # **********TOO BE ADDED LATER***********
         # cats = data.POST['catagory']
         # # for cat in cats:
         # #     cat_to_add = Catagory.objects.filter(name=cat)
         # #     newGame.add(cat_to_add)
-        return redirect(dashboard)
+        messages.success(request, 'Game added')
+        return redirect(addProduct)
 
 def editSearch(request):
     #single game in context will be called "game" 
