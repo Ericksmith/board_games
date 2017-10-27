@@ -29,6 +29,8 @@ class Game(models.Model):
     thumbnail = models.URLField(max_length=255)
     image = models.URLField(max_length=255)
     classic = models.BooleanField()
+    rank = models.CharField(max_length=75)
+    rating = models.CharField(max_length=75)
     catagory = models.ManyToManyField(Catagory, related_name='games')
     created_at = models.DateField(auto_now_add=True)
     updated_at = models.DateField(auto_now=True)
