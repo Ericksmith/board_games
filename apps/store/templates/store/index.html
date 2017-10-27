@@ -115,13 +115,21 @@
                                     <div class='subgames'>
                                         <img src="{{game.thumbnail}}" alt="">
                                         <p class='black'>{{game.title}}</p>
-                                        <p>${{game.sale_price}} <span class='sale_price'>was {{game.price}}</span></p>
+                                        <p><span class='sale_item'>${{game.price}}</span> ${{game.sale_price}}</p>
                                     </div>
                                 </a>
                             {% endfor %}
                     <div name='popular'>
                         <p class='subhead'>Popular Games</p>
-                        <div class='subgames'></div>
+                        {% for game in popular %}
+                            <a href="">
+                                <div class='subgames'>
+                                    <img src="{{game.thumbnail}}" alt="">
+                                    <p class='black'>{{game.title}}</p>
+                                    <p>${{game.price}}</p>                                   
+                                </div>
+                            </a>
+                        {% endfor %}
                     </div>
                     <div name='classics'>
                         <p class='subhead'>Classics</p>
@@ -137,7 +145,15 @@
                     </div>
                     <div name='recent'>
                         <p class='subhead'>Recently Viewed</p>
-                        <div class='subgames'></div>
+                        {% for game in recent %}
+                            <a href="">
+                                <div class='subgames'>
+                                    <img src="{{game.thumbnail}}" alt="">
+                                    <p class='black'>{{game.title}}</p>
+                                    <p>${{game.price}}</p>                                   
+                                </div>
+                            </a>
+                        {% endfor %}
                     </div>
                 </div>
             </div>

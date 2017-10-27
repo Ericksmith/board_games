@@ -68,3 +68,19 @@ def index(request):
     }
 
     return render(request, 'store/index.html', context)
+
+def results(request):
+
+    context = {
+        "games": Game.objects.all()
+    }
+
+    return render(request, 'store/results.html', context)
+
+def game(request, num):
+
+    context = {
+        'game': Game.objects.get(id=num)
+    }
+
+    return render(request, 'store/game.html', context)
