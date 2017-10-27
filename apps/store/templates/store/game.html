@@ -8,7 +8,7 @@
     <body>
         <div id="wrapper">
             <div id="topbar">
-                <a href=""><img id='logo' src="../static/store/images/bt_logo.png" alt=""></a>
+                <a href="/"><img id='logo' src="../static/store/images/bt_logo.png" alt=""></a>
                 <a href="" id='login_ns'>Login</a> | <a href="">Cart</a>
             </div>
             <div id='gp_main'>
@@ -46,7 +46,7 @@
                                 <input class='category' type="submit" value='Murder/Mystery'>
                             </form>
                         </li>
-                        <li><form action="">
+                        <li><form action="" method='post'>
                                 <input type="hidden" name='category' value='puzzle'>
                                 <input class='category' type="submit" value='Puzzle'>
                             </form>
@@ -63,7 +63,8 @@
                     {% else %}
                         <p style="color: #2f7051;">Price: ${{game.price}}</p>
                     {% endif %}
-                    <form action="">
+                    <form action="/add_to_cart" method='post'>
+                        {% csrf_token %}
                         <input type="hidden" name='game_id' value='{{game.id}}'>
                         <input type="submit" value='Add to Cart' id='add_to_cart'>
                     </form>

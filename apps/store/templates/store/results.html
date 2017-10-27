@@ -8,13 +8,13 @@
     <body>
         <div id="wrapper">
             <div id="topbar">
-                <a href=""><img id='logo' src="../static/store/images/bt_logo.png" alt=""></a>
+                <a href="/"><img id='logo' src="../static/store/images/bt_logo.png" alt=""></a>
                 <a href="" id='login_ns'>Login</a> | <a href="">Cart</a>
             </div>
             <div id='results_main'>
                 <h1>Results for {{request.session.search}}</h1>
                 {% for game in games %}
-                    <a href="">
+                    <a href="/game/{{game.id}}">
                         <div class='subgames'>
                             <img src="{{game.thumbnail}}" alt="">
                             <p class='black'>{{game.title}}</p>
