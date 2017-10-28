@@ -125,3 +125,7 @@ def add_to_cart(request):
 
     return redirect('/checkout/cart')
 
+def results_process(request):
+
+    return redirect('/results')
+

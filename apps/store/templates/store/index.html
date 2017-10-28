@@ -14,20 +14,26 @@
                         <input type="text" id="search_bar" name='search' placeholder="Search for a game">
                         <input type="submit" value='search' id='search_btn'>
                     </form>
-                    <a href="" id='login'>Login</a> | <a href="">Cart</a>
+                    {% if request.session.id %}
+                        <a href="" id='account'>My Account</a>
+                    {% else %}
+                        <a href="" id='login'>Login</a>
+                    {% endif %} | <a href="/checkout/cart">Cart</a>
                 </div>
                 <div id="browse">
                     <h3>Browse by Category</h3>
                     <ul>
                         {% for cat in categories %}
-                            <li><form action="" method='post'>
+                            <li>
+                                <form action="/results_process" method='post'>
+                                    {% csrf_token %}
                                     <input type="hidden" name='category_id' value='{{cat.id}}'>
                                     <input class='category' type="submit" value='{{cat.name}}'>
                                 </form>
                             </li>
                         {% endfor %}
                     </ul>
-                    <a href="">Advanced Search</a>
+                    <a href="/results">Advanced Search</a>
                 </div>
                 <div id="main">
                     <a id='featured' href=""><img src="../static/store/images/featured1.jpg" alt=""></a>

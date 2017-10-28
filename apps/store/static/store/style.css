@@ -83,8 +83,16 @@ ul{
     margin-left: 175px;
 }
 
+#account{
+    margin-left: 131px;
+}
+
 #login_ns{
     margin-left: 763px;
+}
+
+#account_ns{
+    margin-left: 719px;
 }
 
 /* -----------index---------- */
