@@ -74,6 +74,10 @@ def index(request):
 
 def results(request):
 
+    if 'id' in request.session:
+        del request.session['id']
+        print 'session id deleted'
+
     if 'cart' in request.session:
         del request.session['cart']
         print "deleted cart"
@@ -86,6 +90,10 @@ def results(request):
     return render(request, 'store/results.html', context)
 
 def game(request, num):
+
+    if not 'id' in request.session:
+        print 'session id created'
+        request.session['id'] = 1
 
     if not 'recently_viewed_ids' in request.session:
         print "create rv firing"
@@ -109,6 +117,13 @@ def game(request, num):
 
     return render(request, 'store/game.html', context)
 
+def user(request, user_id):
+
+
+
+
+    return render(request, 'store/user.html')
+
 def add_to_cart(request):
 
     if not 'cart' in request.session:
@@ -129,4 +144,7 @@ def add_to_cart(request):
 def results_process(request):
 
     return redirect('/results')
+
+
+
 

@@ -6,6 +6,7 @@ urlpatterns = [
     url(r'^$', views.index),
     url(r'^results', views.results),
     url(r'^game/(?P<num>[0-9]+)$', views.game),
+    url(r'^user/(?P<user_id>\d+)$', views.user), 
 
     # functions
     url(r'^add_to_cart', views.add_to_cart),
