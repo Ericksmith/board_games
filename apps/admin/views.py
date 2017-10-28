@@ -29,16 +29,12 @@ def addProduct(request):
         }
     return render(request, 'admin/admin_add_game.html', context)
 
-def orders(request):
-    return render(request, 'admin/orders.html')
 
 def edit_game(request):
-
     context = {
         "game": Game.objects.get(id=2),
         "categories": Catagory.objects.all(),
     }
-
     return render(request, 'admin/admin_edit.html', context)
 
 #Form processing
@@ -110,6 +106,7 @@ def create_game(request):
         messages.success(request, 'Game added')
         return redirect(addProduct)
 
+    
 def editSearch(request):
     #single game in context will be called "game" 
     pass
