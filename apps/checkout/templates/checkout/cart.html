@@ -54,6 +54,8 @@
                     </script>
                 </form>
                 <form action="order-placed" method="post">
+                    {% csrf_token %}
+                    <input type="hidden" name="game_order" value='{{order}}'>
                     <input type="submit" value="Production Checkout" name='proCheckout'>
                 </form>
                     {% else%}

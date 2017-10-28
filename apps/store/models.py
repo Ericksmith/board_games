@@ -36,9 +36,22 @@ class Game(models.Model):
     updated_at = models.DateField(auto_now=True)
     objects = GameManager()
 
+
 class Order(models.Model):
     status = models.CharField(max_length=255)
-    items = models.ManyToManyField(Game, related_name='game_orders')
+    total = models.CharField(max_length=30)
     customer = models.ForeignKey(User, related_name='user_orders')
+    items = models.ManyToManyField(Game, related_name='game_orders')
+    created_at = models.DateField(auto_now_add=True)
+    updated_at = models.DateField(auto_now=True)
+
+class SavedPrice(models.Model):
+    """Price of the product at check out.Price = what the costumer paid
+    basePrice = the non sale price. isSale = was the item on sale."""
+    price = models.CharField(max_length=30)
+    isSale = models.BooleanField(default=False)
+    basePrice = models.CharField(max_length=30)
+    game = models.ForeignKey(Game, related_name='previous_price')
+    order = models.ForeignKey(SavedPrice, related_name='price_at_purchase')
     created_at = models.DateField(auto_now_add=True)
     updated_at = models.DateField(auto_now=True)
