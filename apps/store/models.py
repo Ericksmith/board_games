@@ -52,6 +52,6 @@ class SavedPrice(models.Model):
     isSale = models.BooleanField(default=False)
     basePrice = models.CharField(max_length=30)
     game = models.ForeignKey(Game, related_name='previous_price')
-    order = models.ForeignKey(SavedPrice, related_name='price_at_purchase')
+    order = models.ForeignKey(Order, related_name='price_at_purchase')
     created_at = models.DateField(auto_now_add=True)
     updated_at = models.DateField(auto_now=True)

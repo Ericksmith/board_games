@@ -6,4 +6,5 @@ urlpatterns = [
     url(r'^update-cart', views.update_cart),
     url(r'^confirm', views.confirm),
     url(r'^order-placed', views.processOrder),
+    url(r'^order-complete', views.order_complete)
 ]
