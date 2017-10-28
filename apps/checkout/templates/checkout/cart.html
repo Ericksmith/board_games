@@ -10,6 +10,14 @@
 </head>
 <body>
     <div id='wrapper'>
+            <div id='topbar'>
+                <a href="/"><img id='logo' src="../static/store/images/bt_logo.png" alt=""></a>
+                {% if request.session.id %}
+                <a href="/sign-in/logout" id='login'>Logout</a>
+                {% else %}
+                <a href="/sign-in/1" id='login'>Login</a> | <a href="">Cart</a>
+                {% endif %}
+            </div>
         <div id='cart'>
             {% if list_of_games %}
                 <table class='gameFeild'>
@@ -29,95 +37,35 @@
                 </table>
                 <input type="submit" value="Update Cart" class='myButton'>
                     <p id='total'>Total: {{total}}</p>
-
-            </form>
-            <script src="https://js.stripe.com/v3/"></script>
-            <div id='billing'>
-                <form action="/charge" method="post" id="payment-form">
-                    <label for="first_name">First name:</label>
-                    <input type="text" name="first_name"><br>
-                    <label for="first_name">Last name:</label>
-                    <input type="text" name="first_name"><br>
-                    <label for="address">Address:</label>
-                    <input type="text" name="address"><br>
-                    <label for="city">City:</label>
-                    <input type="text" name="city"><br>
-                    <div class="form-row">
-                    <label for="card-element">
-                        Credit or debit card
-                    </label>
-                    <div id="card-element">
-                        <!-- a Stripe Element will be inserted here. -->
-                    </div>
-                
-                    <!-- Used to display form errors -->
-                    <div id="card-errors" role="alert"></div>
-                    </div>
-                
-                    <button>Submit Payment</button>
                 </form>
+                <div id='billing'>
+                {% if request.session.id %}
+                <script src="https://js.stripe.com/v3/"></script>
+                    
+                    <form action="/your-server-side-code" method="POST">
+                        <script
+                        src="https://checkout.stripe.com/checkout.js" class="stripe-button"
+                        data-key="pk_test_ENMiewIjwD4YUoW8GstAXavr"
+                        data-amount="999"
+                        data-name="Broken Token"
+                        data-description="Payment"
+                        data-image="https://stripe.com/img/documentation/checkout/marketplace.png"
+                        data-locale="auto">
+                    </script>
+                </form>
+                <form action="order-placed" method="post">
+                    {% csrf_token %}
+                    <input type="hidden" name="game_order" value='{{order}}'>
+                    <input type="submit" value="Production Checkout" name='proCheckout'>
+                </form>
+                    {% else%}
+                        <a href="/sign-in/1"><button>Please sign-in to purchase</button></a>
+                    {% endif %}
                 {% else %}
-                    <p>Your cart is currently empty.</p>
-                {% endif %}
+                <h3>No games in your cart yet</h3>
+            {% endif %}
             </div>
         </div>
     </div>
 </body>
-<script>// Create a Stripe client
-        var stripe = Stripe('pk_test_6pRNASCoBOKtIshFeQd4XMUh');
-        
-        // Create an instance of Elements
-        var elements = stripe.elements();
-        
-        // Custom styling can be passed to options when creating an Element.
-        // (Note that this demo uses a wider set of styles than the guide below.)
-        var style = {
-          base: {
-            color: '#32325d',
-            lineHeight: '24px',
-            fontFamily: '"Helvetica Neue", Helvetica, sans-serif',
-            fontSmoothing: 'antialiased',
-            fontSize: '16px',
-            '::placeholder': {
-              color: '#aab7c4'
-            }
-          },
-          invalid: {
-            color: '#fa755a',
-            iconColor: '#fa755a'
-          }
-        };
-        
-        // Create an instance of the card Element
-        var card = elements.create('card', {style: style});
-        
-        // Add an instance of the card Element into the `card-element` <div>
-        card.mount('#card-element');
-        
-        // Handle real-time validation errors from the card Element.
-        card.addEventListener('change', function(event) {
-          var displayError = document.getElementById('card-errors');
-          if (event.error) {
-            displayError.textContent = event.error.message;
-          } else {
-            displayError.textContent = '';
-          }
-        });
-        
-        // Handle form submission
-        var form = document.getElementById('payment-form');
-        form.addEventListener('submit', function(event) {
-          event.preventDefault();
-        
-          stripe.createToken(card).then(function(result) {
-            if (result.error) {
-              // Inform the user if there was an error
-              var errorElement = document.getElementById('card-errors');
-              errorElement.textContent = result.error.message;
-            } else {
-              // Send the token to your server
-              stripeTokenHandler(result.token);
-            }
-          });
-        });</script>
 </html>

@@ -19,9 +19,9 @@ def dashboard(request):
 def addProduct(request):
     if request.session.get('games_search') is not None:
         context = {
-            'games_search': request.session.get('games_search')
+            'games_search': request.session.get('games_search'),
+            'selected_game': request.session.get('selected_game')
         }
-        del request.session['games_search']
     else:
         context = {
             'games_search': False,
@@ -29,16 +29,12 @@ def addProduct(request):
         }
     return render(request, 'admin/admin_add_game.html', context)
 
-def orders(request):
-    return render(request, 'admin/orders.html')
 
 def edit_game(request):
-
     context = {
         "game": Game.objects.get(id=2),
         "categories": Catagory.objects.all(),
     }
-
     return render(request, 'admin/admin_edit.html', context)
 
 #Form processing
@@ -77,7 +73,7 @@ def select_game(request, game_id):
         'yearpublished': game['yearPublished'],
         'title': game['name'],
         'publisher': game['publishers'][0],
-        'rating': game['bggRating'],
+        'rating': str(int(game['bggRating'])),
         'rank': game['rank']
     }
     request.session['selected_game'] = game_to_add
@@ -97,7 +93,11 @@ def create_game(request):
         else:
             classic = False
         try:
+<<<<<<< HEAD
             newGame = Game(title = data['title'], publisher = data['publisher'], yearpublished = int(data['yearpublished']), rank=data['rank'], rating=data['rating'], thumbnail= data['thumbnail'], image=data['image'], minplayers= int(data['minplayers']), maxplayers = int(data['maxplayers']), playtime = int(data['playtime']), description= data['description'], price= data['price'], sale_price= data['sale_price'], classic = classic)
+=======
+            newGame = Game(title = data['title'], publisher = data['publisher'], rating=data['rating'], rank=data['rank'], yearpublished = int(data['yearpublished']), thumbnail= data['thumbnail'], image=data['image'], minplayers= int(data['minplayers']), maxplayers = int(data['maxplayers']), playtime = int(data['playtime']), description= data['description'], price= data['price'], sale_price= data['sale_price'], classic = classic)
+>>>>>>> 474a18aa2bd2ecf376ab844608ddbd87991b3382
             newGame.save()
         except:
             messages.error(request, 'Unable to add game, please check all fields')
@@ -110,6 +110,7 @@ def create_game(request):
         messages.success(request, 'Game added')
         return redirect(addProduct)
 
+    
 def editSearch(request):
     #single game in context will be called "game" 
     pass

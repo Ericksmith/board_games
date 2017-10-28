@@ -1,0 +1,41 @@
+label{
+    display: inline-block;
+    clear: left;
+    width: 250px;
+    text-align: right;
+}
+
+input {
+  display: inline-block;
+
+}
+
+
+#wrapper{
+    width: 1100px;
+    margin: auto;
+    border: 1px solid black;
+}
+
+#topbar{
+    background: linear-gradient(to right, transparent, #2f7051, transparent);
+    height: 80px; 
+}
+#logo{
+    width: 200px;
+    margin-top: 5px;
+    margin-left: 10px;
+}
+
+#searchField {
+    display: inline-block;
+    width: 400px;
+    vertical-align: top;
+    margin-right:50px;
+}
+
+
+#gameField {
+    display: inline-block;
+    width: 400px;
+}

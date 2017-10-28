@@ -20,8 +20,6 @@ class UserManager(models.Manager):
             errors['error'].append('Invalid email format')
         if User.objects.filter(email=postData['email']):
             errors['error'].append('Email already registered')
-        else:
-            errors['error'].append('Please enter in your birthday')
         try:
             validate_password(postData['password'])
         except Exception as e:

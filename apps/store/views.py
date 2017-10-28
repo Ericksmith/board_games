@@ -57,21 +57,33 @@ def index(request):
                 high_key = id
         popular5 += [Game.objects.get(id = high_key)]
 
-    if request.session.get('recently_viewed') is None:
-        request.session['recently_viewed'] = []
-
     context = {
         'sale': random5(Game.objects.exclude(sale_price="")),
         'popular': popular5,
         'classics': random5(Game.objects.filter(classic=1)),
-        'recent': request.session['recently_viewed']
+        'categories': Catagory.objects.all(),
     }
+
+    if 'recently_viewed_ids' in request.session:
+        rv_list = []
+        for i in request.session['recently_viewed_ids']:
+            rv_list += [Game.objects.get(id=i)]
+        context['recently_viewed'] = rv_list
 
     return render(request, 'store/index.html', context)
 
 def results(request):
 
+    if 'id' in request.session:
+        del request.session['id']
+        print 'session id deleted'
+
+    if 'cart' in request.session:
+        del request.session['cart']
+        print "deleted cart"
+
     context = {
+        'categories': Catagory.objects.all(),
         "games": Game.objects.all()
     }
 
@@ -79,8 +91,60 @@ def results(request):
 
 def game(request, num):
 
+    if not 'id' in request.session:
+        print 'session id created'
+        request.session['id'] = 1
+
+    if not 'recently_viewed_ids' in request.session:
+        print "create rv firing"
+        request.session['recently_viewed_ids'] = [num]
+        print request.session['recently_viewed_ids']
+    else:
+        exists = False
+        for i in request.session['recently_viewed_ids']:
+            if i == num:
+                exists = True
+        if not exists:
+            request.session['recently_viewed_ids'].insert(0, num) 
+        while len(request.session['recently_viewed_ids']) > 5:
+            request.session['recently_viewed_ids'].pop()
+        request.session.modified = True
+
+
     context = {
         'game': Game.objects.get(id=num)
     }
 
     return render(request, 'store/game.html', context)
+
+def user(request, user_id):
+
+
+
+
+    return render(request, 'store/user.html')
+
+def add_to_cart(request):
+
+    if not 'cart' in request.session:
+        request.session['cart'] = {str(request.POST['game_id']): 1}
+    else:
+        if not request.POST['game_id'] in request.session['cart']:
+            print "not in cart"
+            request.session['cart'].update({str(request.POST['game_id']): 1}) 
+        else: 
+            request.session['cart'][str(request.POST['game_id'])] += 1
+
+    print "cart"
+    print request.session['cart']
+    request.session.modified = True
+
+    return redirect('/checkout/cart')
+
+def results_process(request):
+
+    return redirect('/results')
+
+
+
+

@@ -9,16 +9,6 @@
     <link rel="stylesheet" href="{% static 'admin/css/styles.css' %}">
 </head>
 <body>
-    <form action="searchProducts" method="post">
-        {% csrf_token %}
-        <input type="submit" value="hit me"> 
-    </form>
-    {% if games_search %}
-        {% for game in games_search %}
-            <p>{{game.id}}</p>
-            <p>{{game.title}}</p>
-            <p>{{game.year_published}}</p>
-        {% endfor %}
-    {% endif %}
+    <a href="/admin/add-product">Add Product</a>
 </body>
 </html>

@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+       <meta charset="UTF-8">
+       <title>Title</title>
+       <link rel="stylesheet" type="text/css" href="../static/store/style.css">
+    </head>
+    <body>
+        <div id='wrapper'>
+            <div id="topbar">
+                <a href="/"><img id='logo' src="../static/store/images/bt_logo.png" alt=""></a>
+                {% if request.session.id %}
+                    <a href="" id='account_ns'>My Account</a>
+                {% else %}
+                    <a href="" id='login_ns'>Login</a>
+                {% endif %} | <a href="/checkout/cart">Cart</a>
+            </div>
+        </div>
+    </body>
+</html>
