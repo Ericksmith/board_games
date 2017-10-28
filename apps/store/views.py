@@ -79,6 +79,7 @@ def results(request):
         print "deleted cart"
 
     context = {
+        'categories': Catagory.objects.all(),
         "games": Game.objects.all()
     }
 

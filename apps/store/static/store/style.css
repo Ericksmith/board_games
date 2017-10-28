@@ -50,6 +50,9 @@ ul{
     margin-left: 10px;
 }
 
+#search_form{
+    vertical-align: top;
+}
 
 #search_bar{
     vertical-align: top;
@@ -99,6 +102,7 @@ ul{
 
 #browse{
     display: inline-block;
+    vertical-align: top;
     width: 180px;
     margin: 10px;
 }
@@ -198,5 +202,7 @@ ul{
 /* --------------results page------------- */
 
 #results_main{
-    padding: 22px;
+    display: inline-block;
+    width: 870px;
+    /* padding: 22px; */
 }
