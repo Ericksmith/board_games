@@ -50,6 +50,9 @@ ul{
     margin-left: 10px;
 }
 
+#search_form{
+    vertical-align: top;
+}
 
 #search_bar{
     vertical-align: top;
@@ -83,14 +86,23 @@ ul{
     margin-left: 175px;
 }
 
+#account{
+    margin-left: 131px;
+}
+
 #login_ns{
     margin-left: 763px;
+}
+
+#account_ns{
+    margin-left: 719px;
 }
 
 /* -----------index---------- */
 
 #browse{
     display: inline-block;
+    vertical-align: top;
     width: 180px;
     margin: 10px;
 }
@@ -190,5 +202,6 @@ ul{
 /* --------------results page------------- */
 
 #results_main{
-    padding: 22px;
+    display: inline-block;
+    width: 870px;
 }
