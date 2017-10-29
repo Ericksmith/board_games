@@ -27,12 +27,15 @@ def addProduct(request):
             'games_search': False,
             'selected_game': request.session.get('selected_game')
         }
+
+    context['categories'] = Catagory.objects.order_by('name')
+
     return render(request, 'admin/admin_add_game.html', context)
 
 
-def edit_game(request):
+def edit_game(request, game_id):
     context = {
-        "game": Game.objects.get(id=2),
+        "game": Game.objects.get(id=game_id),
         "categories": Catagory.objects.all(),
     }
     return render(request, 'admin/admin_edit.html', context)
@@ -92,19 +95,71 @@ def create_game(request):
             classic = True
         else:
             classic = False
+
         try:
             newGame = Game(title = data['title'], publisher = data['publisher'], rating=data['rating'], rank=data['rank'], yearpublished = int(data['yearpublished']), thumbnail= data['thumbnail'], image=data['image'], minplayers= int(data['minplayers']), maxplayers = int(data['maxplayers']), playtime = int(data['playtime']), description= data['description'], price= data['price'], sale_price= data['sale_price'], classic = classic)
+            newGame.save()
+            cats = data.getlist('category')
+            for cat in cats:
+                cat_to_add = Catagory.objects.get(id=(int(cat)))
+                newGame.catagory.add(cat_to_add)
+                newGame.save()
             newGame.save()
         except:
             messages.error(request, 'Unable to add game, please check all fields')
             return redirect(addProduct)
-        # **********TOO BE ADDED LATER***********
-        # cats = data.POST['catagory']
-        # # for cat in cats:
-        # #     cat_to_add = Catagory.objects.filter(name=cat)
-        # #     newGame.add(cat_to_add)
+
         messages.success(request, 'Game added')
         return redirect(addProduct)
+
+def update_game(request):
+
+    if request.method == 'POST':
+        errors = Game.objects.validator(request.POST)
+        if errors:
+            for error in errors:
+                messages.error(request, error)
+            return redirect(addProduct)
+        data = request.POST
+        if data.get('classic') == 'True':
+            classic = True
+        else:
+            classic = False
+
+        try:
+            update = Game.objects.get(id=data['id'])
+            update.title = data['title']
+            update.publisher = data['publisher']
+            update.rating=data['rating']
+            update.image=data['image']
+            update.minplayers= int(data['minplayers'])
+            update.maxplayers = int(data['maxplayers'])
+            update.playtime = int(data['playtime'])
+            update.description= data['description']
+            update.price= data['price']
+            update.sale_price= data['sale_price']
+            update.classic = classic
+            update.save()
+
+            old_cats = Game.objects.get(id=data['id']).catagory.all()
+            old_cat_ids = []
+            for cat in old_cats:
+                old_cat_ids += [cat.id]
+            new_cat_ids = data.getlist('category')
+
+            for ocat in old_cat_ids:
+                update.catagory.remove(Catagory.objects.get(id=int(ocat)))
+
+            for ncat in new_cat_ids:
+                update.catagory.add(Catagory.objects.get(id=int(ncat)))
+
+        except:
+            messages.error(request, 'Unable to update game, please check all fields')
+            return redirect('/admin/edit-game/{}'.format(data['id']))
+
+        messages.success(request, 'Game updated')
+        return redirect('/admin/edit-game/{}'.format(data['id'])) 
+
 
     
 def editSearch(request):
