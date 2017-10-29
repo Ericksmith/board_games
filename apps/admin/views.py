@@ -93,11 +93,7 @@ def create_game(request):
         else:
             classic = False
         try:
-<<<<<<< HEAD
-            newGame = Game(title = data['title'], publisher = data['publisher'], yearpublished = int(data['yearpublished']), rank=data['rank'], rating=data['rating'], thumbnail= data['thumbnail'], image=data['image'], minplayers= int(data['minplayers']), maxplayers = int(data['maxplayers']), playtime = int(data['playtime']), description= data['description'], price= data['price'], sale_price= data['sale_price'], classic = classic)
-=======
             newGame = Game(title = data['title'], publisher = data['publisher'], rating=data['rating'], rank=data['rank'], yearpublished = int(data['yearpublished']), thumbnail= data['thumbnail'], image=data['image'], minplayers= int(data['minplayers']), maxplayers = int(data['maxplayers']), playtime = int(data['playtime']), description= data['description'], price= data['price'], sale_price= data['sale_price'], classic = classic)
->>>>>>> 474a18aa2bd2ecf376ab844608ddbd87991b3382
             newGame.save()
         except:
             messages.error(request, 'Unable to add game, please check all fields')

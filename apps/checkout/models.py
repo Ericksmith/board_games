@@ -10,7 +10,6 @@ from decimal import Decimal
 #stand alone functions
 def processCart(cart):
     # cart = { '1': 4, '2' : 2 }
-    # cart = request.session['cart']
     games_to_buy = []
     x = 0
     total = 0
