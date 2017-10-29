@@ -11,14 +11,23 @@
     <body>
         <img style="width: 250px" src="{{game.image}}" alt="game image">
         <h1>Edit Info for {{game.title}}</h1>
-        <form action="/admin/edit_game" method="post">
+        {% if messages %}
+            <ul class="messages">
+                {% for message in messages %}
+                <li class='errorMessage'>{{ message }}</li>
+                {% endfor %}
+            </ul>
+        {% endif %}
+        <form action="/admin/update-game" method="post">
             {% csrf_token %}
-            <p>Image url: <input class='longinput' type="text" name="image_url" value="{{game.image}}"></p>
-            <p>Thumbnail url: <input class='longinput' type="text" name="thumbnail_url" value="{{game.thumbnail}}"></p>
+            <input type="hidden" name='id' value='{{game.id}}'>
+            <p>Image url: <input class='longinput' type="text" name="image" value="{{game.image}}"></p>
+            <p>Thumbnail url: <input class='longinput' type="text" name="thumbnail" value="{{game.thumbnail}}"></p>
             <p>Title: <input class='longinput' type="text" name="title" value="{{game.title}}"></p>
             <p>Publisher: <input type="text" name="publisher" value="{{game.publisher}}"></p>
             <p>Year: <input type="text" name="yearpublished" value="{{game.yearpublished}}"></p>
-            <p>Descriptoin: <textarea name="desc" cols="30" rows="10">{{game.description}}</textarea></p>
+            <p>Rating: <input type="text" name="rating" value="{{game.rating}}"></p>
+            <p>Descriptoin: <textarea name="description" cols="30" rows="10">{{game.description}}</textarea></p>
             <p>Price: $<input type="text" name="price" value='{{game.price}}'></p>
             <p>Sale Price: $<input type="text" name="sale_price" value='{{sale_price}}'> leave blank if not on sale</p>
             <p>Min Players: <input type="text" name="minplayers" value="{{game.minplayers}}"></p>
