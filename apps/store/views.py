@@ -36,25 +36,27 @@ def index(request):
     recent_orders = Order.objects.filter(created_at__gt=recent_date)
     for order in recent_orders:
         for item in order.items.all():
-            if not popular_object[item.id]:
-                popular_object[item.id] = 1
+            if not item.game_id in popular_object:
+                popular_object[item.game_id] = item.quantity
             else:
-                popular_object[item.id] += 1
+                popular_object[item.game_id] += item.quantity
+
+    print popular_object
     popular5 = []
     while len(popular5)<5:
         high_value = 1
         high_key = 1
-        for id in popular_object:
+        for game_id in popular_object:
             in_arr = False
-            for x in popular5:
-                if x.id == id:
+            for i in popular5:
+                if game_id == i.id:
                     in_arr = True
                     break
             if in_arr:
                 continue
-            if popular_object[id] > high_value:
-                high_value = popular_object[id]
-                high_key = id
+            if popular_object[game_id] > high_value:
+                high_value = popular_object[game_id]
+                high_key = game_id
         popular5 += [Game.objects.get(id = high_key)]
 
     context = {
@@ -118,7 +120,13 @@ def game(request, num):
     return render(request, 'store/game.html', context)
 
 def user(request, user_id):
-
+    if not 'id' in request.session:
+        return redirect('/')
+    if request.session['id'] != int(user_id):
+        print "didn't work"
+        return redirect('/')
+    print type(request.session['id'])
+    print type(user_id)
 
 
 

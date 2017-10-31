@@ -10,9 +10,9 @@
             <div id="topbar">
                 <a href="/"><img id='logo' src="../static/store/images/bt_logo.png" alt=""></a>
                 {% if request.session.id %}
-                    <a href="" id='account_ns'>My Account</a>
+                    <a href="/user/{{request.session.id}}" id='account_ns'>My Account</a>
                 {% else %}
-                    <a href="" id='login_ns'>Login</a>
+                    <a href="/sign-in" id='login_ns'>Login</a>
                 {% endif %} | <a href="/checkout/cart">Cart</a>
             </div>
             <div id='gp_main'>

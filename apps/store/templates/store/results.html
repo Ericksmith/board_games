@@ -14,9 +14,9 @@
                         <input type="submit" value='search' id='search_btn'>
                     </form>
                     {% if request.session.id %}
-                        <a href="" id='account'>My Account</a>
+                        <a href="/user/{{request.session.id}}" id='account'>My Account</a>
                     {% else %}
-                        <a href="" id='login'>Login</a>
+                        <a href="/sign-in" id='login'>Login</a>
                     {% endif %} | <a href="/checkout/cart">Cart</a>
                 </div>
                 <div id="browse">
