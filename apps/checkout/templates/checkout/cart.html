@@ -25,8 +25,8 @@
                     {% csrf_token %}
                     {% for game in list_of_games %}
                         <tr>
-                            <td><img src="{{game.game_object.thumbnail}}" alt=""></td>
-                            <td><h3 class='tableText'>{{game.game_object.title}}</h3></td>
+                            <td><a href="/game/{{game.game_object.id}}"><img src="{{game.game_object.thumbnail}}" alt=""></a></td>
+                            <td><a href="/game/{{game.game_object.id}}"><h3 class='tableText'>{{game.game_object.title}}</a></h3></td>
                             <td>{{game.subtotal}}</td>
                             <td><select name ='order{{game.game_object.id}}' class='quantity'>
                                 '{{game.quantity|safe}}'

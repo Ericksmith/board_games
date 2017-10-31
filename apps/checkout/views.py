@@ -23,8 +23,10 @@ def confirm(request):
 def order_complete(request):
     if request.session.get('id') is None:
         return redirect('/sign-in')
+    last_order = Order.objects.filter(customer=request.session['id']).last()
     context = {
-        'order': Order.objects.filter(customer=request.session['id']).last()
+        'order': last_order,
+        'games': last_order.items.all()
     }
     return render(request, 'checkout/order-placed.html', context)
 

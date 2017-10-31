@@ -5,12 +5,55 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Purchase Complete</title>
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'checkout/css/checkout-styles.css' %}">
 </head>
 <body>
-    {% if order %}
-    <p>{{order.status}}</p>
-    <p>{{order.total}}</p>
-    <p>{{order.id}}</p>
-    {% endif %}
+    <div id='wrapper'>
+            <div id='topbar'>
+                <a href="/"><img id='logo' src="../static/store/images/bt_logo.png" alt=""></a>
+                {% if request.session.id %}
+                <a href="/sign-in/logout" id='login'>Logout</a>
+                {% else %}
+                <a href="/sign-in/1" id='login'>Login</a> | <a href="">Cart</a>
+                {% endif %}
+            </div>
+
+        <div id='order'>
+            <h3>Thank you for placing an order!</h3>
+            <div id='orderInfo'>
+                <ul>
+                    <li>Order Number: {{order.id}}</li><br>
+                    <li>Order Status: {{order.status}}</li><br>
+                    <li>Total: {{order.total}}</li><br>
+
+                </ul>
+            </div>
+            </div>
+            <div id='itemsInOrder'>
+                <table>
+                    <tr>
+                        <th></th>
+                        <th>Game</th>
+                        <th>Price</th>
+                        <th>quantity</th>
+                    </tr>
+                    {% for game in games%}
+                        <tr>
+                            <td><a href="/game/{{game.game.id}}"><img src="{{game.game.thumbnail}}" alt=""></a></td>
+                            <td><h3 class='tableText'><a href="/game/{{game.game.id}}">{{game.game.title}}</a></h3></td>
+                            {% if game.isSale %}
+                            <td><h3 class='tableText'><span id='onSale'>{{game.basePrice}}</span>&#160;&#160;{{game.price}}</h3></td>
+                            {% else %}
+                            <td><h3 class='tableText'>{{game.price}}</h3></td>
+                            {% endif %}
+                            <td class='tableText'>&#160;&#160;&#160;&#160;{{game.quantity}}&#160;&#160;&#160;&#160;</td>
+                            </tr>
+                    {% endfor %}
+                </table>
+
+            </div>
+        </div>
+    </div>
 </body>
 </html>

@@ -127,3 +127,19 @@ table, th, td {
 	top:1px;
 }
 
+#onSale {
+    color: red;
+    text-decoration: line-through;
+}
+
+#itemsInOrder {
+    width: 600px;
+    display: inline-block;
+    /* border: 1px solid black; */
+}
+
+#order {
+    width: 200px;
+    display: inline-block;
+    /* border: 1px solid black; */
+}
