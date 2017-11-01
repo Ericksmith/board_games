@@ -9,11 +9,7 @@
         <div id='wrapper'>
             <div id="topbar">
                 <a href="/"><img id='logo' src="../static/store/images/bt_logo.png" alt=""></a>
-                {% if request.session.id %}
-                    <a href="" id='account_ns'>My Account</a>
-                {% else %}
-                    <a href="" id='login_ns'>Login</a>
-                {% endif %} | <a href="/checkout/cart">Cart</a>
+                <a href="/sign-in/logout" id='logout'>Logout</a> | <a href="/checkout/cart">Cart</a>
             </div>
         </div>
     </body>
