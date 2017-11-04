@@ -126,36 +126,45 @@ def update_game(request):
         else:
             classic = False
 
-        try:
-            update = Game.objects.get(id=data['id'])
-            update.title = data['title']
-            update.publisher = data['publisher']
-            update.rating=data['rating']
-            update.image=data['image']
-            update.minplayers= int(data['minplayers'])
-            update.maxplayers = int(data['maxplayers'])
-            update.playtime = int(data['playtime'])
-            update.description= data['description']
-            update.price= data['price']
-            update.sale_price= data['sale_price']
-            update.classic = classic
-            update.save()
+        # try:
+        update = Game.objects.get(id=data['id'])
+        update.title = data['title']
+        update.publisher = data['publisher']
+        update.yearpublished = int(data['yearpublished'])
+        update.rating=data['rating']
+        update.image=data['image']
+        update.minplayers= int(data['minplayers'])
+        update.maxplayers = int(data['maxplayers'])
+        update.playtime = int(data['playtime'])
+        update.description= data['description']
+        update.price= data['price']
+        print data
+        if data['sale_price'] == "" or not 'sale_price' in data:
+            print "no sale"
+            update.sale_price = ''
+        else:
+            print "sale exists"
+            print update.sale_price
+            print str(data['sale_price'])
+            update.sale_price = str(data['sale_price'])
+        update.classic = classic
+        update.save()
 
-            old_cats = Game.objects.get(id=data['id']).catagory.all()
-            old_cat_ids = []
-            for cat in old_cats:
-                old_cat_ids += [cat.id]
-            new_cat_ids = data.getlist('category')
+        old_cats = Game.objects.get(id=data['id']).catagory.all()
+        old_cat_ids = []
+        for cat in old_cats:
+            old_cat_ids += [cat.id]
+        new_cat_ids = data.getlist('category')
 
-            for ocat in old_cat_ids:
-                update.catagory.remove(Catagory.objects.get(id=int(ocat)))
+        for ocat in old_cat_ids:
+            update.catagory.remove(Catagory.objects.get(id=int(ocat)))
 
-            for ncat in new_cat_ids:
-                update.catagory.add(Catagory.objects.get(id=int(ncat)))
+        for ncat in new_cat_ids:
+            update.catagory.add(Catagory.objects.get(id=int(ncat)))
 
-        except:
-            messages.error(request, 'Unable to update game, please check all fields')
-            return redirect('/admin/edit-game/{}'.format(data['id']))
+        # except:
+        #     messages.error(request, 'Unable to update game, please check all fields')
+        #     return redirect('/admin/edit-game/{}'.format(data['id']))
 
         messages.success(request, 'Game updated')
         return redirect('/admin/edit-game/{}'.format(data['id'])) 
