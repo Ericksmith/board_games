@@ -1,8 +1,5 @@
 label{
     display: inline-block;
-    clear: left;
-    width: 250px;
-    text-align: right;
 }
 
 input {
@@ -14,7 +11,7 @@ input {
 #wrapper{
     width: 1100px;
     margin: auto;
-    border: 1px solid black;
+    /* border: 1px solid black; */
 }
 
 #topbar{
@@ -38,4 +35,25 @@ input {
 #gameField {
     display: inline-block;
     width: 400px;
+}
+
+#searchInput{
+    margin-top: 20px;
+}
+
+table {
+    border-collapse: collapse;
+}
+
+table, th, td {
+    border: 1px solid black;
+    text-align: center;
+}
+
+#gameRow{
+    width: 350px;
+}
+
+th{
+    width: 100px;
 }
