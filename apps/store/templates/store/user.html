@@ -11,6 +11,42 @@
                 <a href="/"><img id='logo' src="../static/store/images/bt_logo.png" alt=""></a>
                 <a href="/sign-in/logout" id='logout'>Logout</a> | <a href="/checkout/cart">Cart</a>
             </div>
+            <div id='user_info'>
+                <h1>My Account</h1>
+                <p>Name: {{user.first_name}} {{user.last_name}}</p>
+                <p>Email: {{user.email}}</p>
+                <p><a href="">Edit My Information</a></p>
+            </div>
+            <div id="orders">
+                <h1>My Orders</h1>
+                {% for order in orders %}
+                <div class='order'>
+                    <h3>{{order.status}}</h3>
+                    <p>Order placed: {{order.created_at}} <br>
+                        Total: ${{order.total}}
+                    </p>
+
+                    {% for item in order.items.all %}
+                        <div class='order_item'>
+                            <a href="/game/{{item.game.id}}"><img src="{{item.game.thumbnail}}" alt=""></a>
+                            <div class='order_info'>
+                                <p>
+                                    <span class='bold'>{{item.game.title}}</span> <br>
+                                    quantity: {{item.quantity}} <br>
+                                    price: ${{item.price}}
+
+                                </p>
+                            </div>
+                        </div>
+                    {% endfor %}
+                </div>
+                {% endfor %}
+                <table>
+                    <tr>
+                        <th></th>
+                    </tr>
+                </table>
+            </div>
         </div>
     </body>
 </html>
