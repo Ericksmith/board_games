@@ -41,7 +41,6 @@ def index(request):
             else:
                 popular_object[item.game_id] += item.quantity
 
-    print popular_object
     popular5 = []
     while len(popular5)<5:
         high_value = 1
@@ -75,32 +74,24 @@ def index(request):
     return render(request, 'store/index.html', context)
 
 def results(request):
-
-    if 'id' in request.session:
-        del request.session['id']
-        print 'session id deleted'
-
-    if 'cart' in request.session:
-        del request.session['cart']
-        print "deleted cart"
+    games = []
+    if 'search_results' in request.session:
+        for game_id in request.session['search_results']:
+            games.append(Game.objects.get(id=game_id)) 
+    else:
+        games = Game.objects.all()
 
     context = {
         'categories': Catagory.objects.all(),
-        "games": Game.objects.all()
+        "games": games
     }
 
     return render(request, 'store/results.html', context)
 
 def game(request, num):
 
-    if not 'id' in request.session:
-        print 'session id created'
-        request.session['id'] = 1
-
     if not 'recently_viewed_ids' in request.session:
-        print "create rv firing"
         request.session['recently_viewed_ids'] = [num]
-        print request.session['recently_viewed_ids']
     else:
         exists = False
         for i in request.session['recently_viewed_ids']:
@@ -123,14 +114,14 @@ def user(request, user_id):
     if not 'id' in request.session:
         return redirect('/')
     if request.session['id'] != int(user_id):
-        print "didn't work"
         return redirect('/')
-    print type(request.session['id'])
-    print type(user_id)
 
+    context = {
+        "user": User.objects.get(id = request.session['id']),
+        "orders": Order.objects.filter(customer_id = request.session['id'])
+    }
 
-
-    return render(request, 'store/user.html')
+    return render(request, 'store/user.html', context)
 
 def add_to_cart(request):
 
@@ -138,18 +129,24 @@ def add_to_cart(request):
         request.session['cart'] = {str(request.POST['game_id']): 1}
     else:
         if not request.POST['game_id'] in request.session['cart']:
-            print "not in cart"
             request.session['cart'].update({str(request.POST['game_id']): 1}) 
         else: 
             request.session['cart'][str(request.POST['game_id'])] += 1
-
-    print "cart"
-    print request.session['cart']
     request.session.modified = True
 
     return redirect('/checkout/cart')
 
 def results_process(request):
+    results = []
+    if 'category_id' in request.POST:
+        games = Game.objects.filter(catagory=request.POST['category_id'])
+        for game in games:
+            results.append(game.id)
+        request.session['search_results'] = results
+        request.session['search_label'] = Catagory.objects.get(id=request.POST['category_id']).name
+
+
+
 
     return redirect('/results')
 

@@ -23,6 +23,10 @@ ul{
     text-align: center;
 }
 
+.bold{
+    font-weight: bold;
+}
+
 #wrapper{
     width: 1100px;
     margin: auto;
@@ -96,6 +100,10 @@ ul{
 
 #account_ns{
     margin-left: 719px;
+}
+
+#logout{
+    margin-left: 750px;
 }
 
 /* -----------index---------- */
@@ -204,4 +212,55 @@ ul{
 #results_main{
     display: inline-block;
     width: 870px;
+}
+
+/* --------------------user page-------------------- */
+
+#user_info{
+    display: inline-block;
+    vertical-align: top;
+    margin: 20px;
+    margin-left: 60px;
+    text-align: right;
+}
+
+#orders{
+    display: inline-block;
+    vertical-align: top;
+    margin: 20px;
+}
+
+
+.order{
+    background: linear-gradient(to right, transparent, #a2c5b5, transparent);
+    padding: 12px;
+    margin: 10px;
+    max-width: 700px;
+}
+
+.order > h3{
+    margin: 0
+}
+
+.order > p{
+    margin-top: 8px;
+}
+
+.order_item{
+    display: inline-block;
+    margin-right: 20px;
+    margin-bottom: 10px;
+}
+
+.order_item>a>img{
+    display: inline-block;
+    max-height: 100px;
+    max-width: 150px;
+}
+
+.order_info{
+    display: inline-block;
+    vertical-align: top;
+    font-size: 12px;
+    max-width: 100px;
 }

@@ -35,7 +35,7 @@
                     <a href="/results">Advanced Search</a>
                 </div>
             <div id='results_main'>
-                <h1>Results for {{request.session.search}}</h1>
+                <h1>Results for {{request.session.search_label}}</h1>
                 {% for game in games %}
                     <a href="/game/{{game.id}}">
                         <div class='subgames'>

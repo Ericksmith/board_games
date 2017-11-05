@@ -20,41 +20,15 @@
                     <img class='gp_image' src="{{game.image}}" alt="">
                     <h3>Categories</h3>
                     <ul>
-                        <li><form action="">
-                                <input type="hidden" name='category' value='adventure'>
-                                <input class='category' type="submit" value='Adventure'>
-                            </form>
-                        </li>
-                        <li><form action="">
-                                <input type="hidden" name='category' value='exploration'>
-                                <input class='category' type="submit" value='Exploration'>
-                            </form>
-                        </li>
-                        <li><form action="">
-                                <input type="hidden" name='category' value='fantasy'>
-                                <input class='category' type="submit" value='Fantasy'>
-                            </form>
-                        </li>
-                        <li><form action="">
-                                <input type="hidden" name='category' value='fighting'>
-                                <input class='category' type="submit" value='Fighting'>
-                            </form>
-                        </li>
-                        <li><form action="">
-                                <input type="hidden" name='category' value='horror'>
-                                <input class='category' type="submit" value='Horror'>
-                            </form>
-                        </li>
-                        <li><form action="">
-                                <input type="hidden" name='category' value='murder_mystery'>
-                                <input class='category' type="submit" value='Murder/Mystery'>
-                            </form>
-                        </li>
-                        <li><form action="" method='post'>
-                                <input type="hidden" name='category' value='puzzle'>
-                                <input class='category' type="submit" value='Puzzle'>
-                            </form>
-                        </li>
+                        {% for cat in game.catagory.all %}
+                            <li>
+                                <form action="/results_process" method='post'>
+                                    {% csrf_token %}
+                                    <input type="hidden" name='category_id' value='{{cat.id}}'>
+                                    <input class='category' type="submit" value='{{cat.name}}'>
+                                </form>
+                            </li>
+                        {% endfor %}
                     </ul>
                 </div>
                 <div id='gp_text'>
