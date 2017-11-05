@@ -6,7 +6,7 @@ from django.contrib import messages
 import requests
 import xml.etree.ElementTree as ET
 from ..store.models import *
-from .models import cleanDesc
+from .models import *
 from ..login_reg.models import User
 from decimal import Decimal
 
@@ -32,6 +32,17 @@ def addProduct(request):
 
     return render(request, 'admin/admin_add_game.html', context)
 
+def orders(request):
+    if request.session.get('orders') is not None:
+        context = {
+            'orders': request.session.get['orders']
+        }
+        del request.session['orders']
+    else:
+        context = {
+            'orders': Order.objects.order_by('-id')[:10]
+        }
+    return render(request, 'admin/orders.html', context)
 
 def edit_game(request, game_id):
     context = {
@@ -174,3 +185,16 @@ def update_game(request):
 def editSearch(request):
     #single game in context will be called "game" 
     pass
+
+def orderSearch(request):
+    if request.method == 'POST':
+        search_type = request.POST['search_type']
+        searchFunctions = {
+            'customer': customer(request.POST),
+            'dateRange': dateRange(request.POST),
+            'orderId': orderId(request.POST),
+            'game': game(request.POST)
+        }
+        request.session['orders'] = searchFunctions[search_type]
+        # Getting an error trying to put results in session
+        return redirect(orders)

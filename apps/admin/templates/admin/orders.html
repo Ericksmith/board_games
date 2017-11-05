@@ -4,9 +4,63 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Thanks</title>
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'admin/css/admin-styles.css' %}">
+    <script src='https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js'></script>
+    <script src="{%static 'admin/scripts/orders.js'%}"></script>
+    <title>Search orders</title>
 </head>
 <body>
-    <h1>order placed</h1>
+    <div id='wrapper'>
+        <div id='topbar'>
+                <a href="/"><img id='logo' src="../static/store/images/bt_logo.png" alt=""></a>
+        </div>
+        <div>
+            <div id='searchOptions'>
+                <h4>Search orders by:</h4>
+                <label for="customer">Customer Name</label>
+                <input type="radio" name="searchType" value="customer" id="customer" checked>
+                <label for="game">| Game Name</label>
+                <input type="radio" name="searchType" value="game" id="game">
+                <label for="orderId">| Order Id</label>
+                <input type="radio" name="searchType" value="orderId" id="orderId">
+                <label for="dateRange">| Date Range</label>
+                <input type="radio" name="searchType" value="dateRange" id="dateRange">
+            </div>
+            <form action="orderSearch" method="post">
+                {% csrf_token %}
+                <div id='searchInput'>
+                <input type="hidden" name="search_type" value='customer'>
+                <input type="text" name="search">
+                <input type="submit" value="Search by Customer">
+                </div>
+            </form>
+        </div>
+        <div id="searchResults">
+            <table>
+                <tr>
+                    <th>Order Id</th>
+                    <th>Status</th>
+                    <th>Customer</th>
+                    <th id='gameRow'>Games</th>
+                    <th>Total</th>
+                    <th>Order Date</th>
+                </tr>
+                {% if orders %}
+ 
+                {% for order in orders %}
+                    <tr>
+                        <td>{{order.id}}</td>
+                        <td>{{order.status}}</td>
+                        <td>{{order.customer.first_name}} {{order.customer.last_name}}</td>
+                        <td>{{order.items.id}}</td> 
+                        <td>{{order.total}}</td>
+                        <td>{{order.created_at}}</td>
+                    </tr>
+                {% endfor %}
+                {% endif %}
+            </table>
+        </div>
+    </div>
 </body>
 </html>
