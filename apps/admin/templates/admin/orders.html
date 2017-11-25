@@ -42,21 +42,31 @@
                     <th>Order Id</th>
                     <th>Status</th>
                     <th>Customer</th>
-                    <th id='gameRow'>Games</th>
-                    <th>Total</th>
+                    <th id='gameRow'>Game</th>
+                    <th>Price Paid</th>
+                    <th>Base Price</th>
                     <th>Order Date</th>
                 </tr>
                 {% if orders %}
  
                 {% for order in orders %}
                     <tr>
+                        <td><a href="/admin/edit-order/{{order.order.id}}">{{order.order.id}}</a></td>
+                        <td>{{order.order.status}}</td>
+                        <td>{{order.order.customer.first_name}} {{order.order.customer.last_name}}</td>
+                        <td><a href="/game/{{order.game.id}}">{{order.game.title}}</a> x {{order.quantity}}</td> 
+                        <td>{{order.price}}</td>
+                        <td>{{order.basePrice}}</td>
+                        <td>{{order.created_at}}</td>
+                    </tr>
+                    {% comment %} <tr>
                         <td>{{order.id}}</td>
                         <td>{{order.status}}</td>
                         <td>{{order.customer.first_name}} {{order.customer.last_name}}</td>
-                        <td>{{order.items.price}}</td> 
+                        <td>{{order.items}}</td> 
                         <td>{{order.total}}</td>
                         <td>{{order.created_at}}</td>
-                    </tr>
+                    </tr> {% endcomment %}
                 {% endfor %}
                 {% endif %}
             </table>

@@ -34,20 +34,22 @@ def addProduct(request):
     return render(request, 'admin/admin_add_game.html', context)
 
 def orders(request):
-    print('back in orders', request.session.get("orders"))
     if request.session.get('orders') is not None:
-        print('rendering orders')
         context = {
             'orders': pickle.loads(request.session.get('orders'))
         }
-        print(context)
         del request.session['orders']
     else:
         context = {
-            'orders': Order.objects.order_by('-id')[:10]
+            'orders': ItemInOrder.objects.order_by('-id')[:10]
         }
-    print('loading page')
     return render(request, 'admin/orders.html', context)
+
+def edit_order(request, order_id):
+    context = {
+        "order": findOneOrder(order_id)
+    }
+    return render(request, "admin/edit_order.html", context)
 
 def edit_game(request, game_id):
     context = {

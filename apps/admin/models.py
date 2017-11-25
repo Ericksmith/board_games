@@ -15,28 +15,20 @@ def cleanDesc(desc):
     desc = desc.replace('&quot;', ' ')
     return desc
 
-def queryToDict(query):
-    result = {}
-    innerList = []
-    for item in query:
-        innerList.append(item)
-    # result = {
-    #     'search': innerList
-    # }
-    print('toDict', innerList)
-    return innerList
-
 def customer(postData):
-    search = Order.objects.filter(customer__first_name__contains=postData['search']) | Order.objects.filter(customer__last_name__contains=postData['search'])
-    return search
+    return ItemInOrder.objects.filter(order__customer__first_name__contains=postData['search']).all() | ItemInOrder.objects.filter(order__customer__last_name__contains=postData['search']).all()
+    # return Order.objects.filter(customer__first_name__contains=postData['search']).all() | Order.objects.filter(customer__last_name__contains=postData['search']).all()
 
 def dateRange(postData):
     pass
 
 def orderId(postData):
-    pass
+    return ItemInOrder.objects.filter(order__id=int(postData['search']))
 
 def game(postData):
-    pass
+    return ItemInOrder.objects.filter(game__title__contains=postData['search']).all()
+
+def findOneOrder(order_id):
+    return Order.objects.get(id=order_id)
 
 

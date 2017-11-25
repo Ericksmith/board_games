@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'admin/css/admin-styles.css' %}">
+    <title>Edit Order</title>
+</head>
+<body>
+    <div id='wrapper'>
+        <div id='topbar'>
+            <a href="/"><img id='logo' src="../static/store/images/bt_logo.png" alt=""></a>
+        </div>
+        <div id="orderInfo">
+            {% if order %}
+            <div id="userInfo">
+                <p>Customer Info:</p>
+            </div>
+                <div id="customer">
+                    <p>User ID: </p>
+                    <p>First name: </p>
+                    <p>Last Name: </p>
+                    <p>Email: </p>
+                </div>
+                <div id="customerData">
+                    <p>{{order.customer.id}}</p>
+                    <p>{{order.customer.first_name}}</p>
+                    <p>{{order.customer.last_name}}</p>
+                    <p>{{order.customer.email}}</p>
+                </div>
+            <div id"order">
+                <p>Order Info: </p>
+            </div>
+            <div id="orderStatic">
+                <p>Order ID: </p>
+                <p>Order total: </p>
+                <p>Order Placed: </p>
+                <p>Order Updated At: </p>
+            </div>
+            <div id="orderData">
+                <p>{{order.id}}</p>
+                <p>${{order.total}}</p>
+                <p>{{order.created_at}}</p>
+                <p>{{order.updated_at}}</p>
+            </div>
+            <form action="/admin/update-order" id="editOrder" method="post">
+                <label for="status">Order Satus: </label>
+                <select name="status">
+                    <option value="Submitted">Submitted</option>
+                    <option value="Shipped">Shipped</option>
+                    <option value="Complete">Complete</option>
+                    <option value="Cancelled">Cancelled</option>
+                </select>
+            {% for item in order.items.all %}
+                <hr>
+                <p>{{item.game.title}}</p>
+                <p>Quantity: {{item.quantity}}</p>
+                <p>Base Price: {{item.basePrice}}</p>
+                <label for="price">Price Paid: </label>
+                <input type="text" name="Price" value="{{item.price}}">
+                <p>Refund: <input type="checkbox" name="refund-{{item.id}}"></p>
+            {% endfor %}
+            <input type="submit" value="Update Order">
+            </form>
+        </div>
+            {% endif %}
+        </div>
+</body>
+</html>
