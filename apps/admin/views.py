@@ -9,6 +9,7 @@ from ..store.models import *
 from .models import *
 from ..login_reg.models import User
 from decimal import Decimal
+import pickle
 
 
 
@@ -33,15 +34,19 @@ def addProduct(request):
     return render(request, 'admin/admin_add_game.html', context)
 
 def orders(request):
+    print('back in orders', request.session.get("orders"))
     if request.session.get('orders') is not None:
+        print('rendering orders')
         context = {
-            'orders': request.session.get['orders']
+            'orders': pickle.loads(request.session.get('orders'))
         }
+        print(context)
         del request.session['orders']
     else:
         context = {
             'orders': Order.objects.order_by('-id')[:10]
         }
+    print('loading page')
     return render(request, 'admin/orders.html', context)
 
 def edit_game(request, game_id):
@@ -73,6 +78,8 @@ def searchProducts(request):
         return redirect(addProduct)
 
 def select_game(request, game_id):
+    ''' Queries the Board game geek API by the game id param and returns
+    that games info as a dictionary to be rendered on the add product page.'''
     resp = requests.get("https://bgg-json.azurewebsites.net/thing/{}".format(game_id))
     game = json.loads(resp.text)
     desc = game['description']
@@ -195,6 +202,5 @@ def orderSearch(request):
             'orderId': orderId(request.POST),
             'game': game(request.POST)
         }
-        request.session['orders'] = searchFunctions[search_type]
-        # Getting an error trying to put results in session
-        return redirect(orders)
+        request.session['orders'] = pickle.dumps(searchFunctions[search_type])
+        return redirect("/admin/orders")
