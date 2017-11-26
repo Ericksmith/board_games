@@ -6,9 +6,28 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Admin Dashboard</title>
     {% load static %}
-    <link rel="stylesheet" href="{% static 'admin/css/styles.css' %}">
+    <link rel="stylesheet" href="{% static 'admin/css/admin-styles.css' %}">
 </head>
 <body>
-    <a href="/admin/add-product">Add Product</a>
+        <div id='wrapper'>
+            <div id='topbar'>
+                <a href="/"><img id='logo' src="../static/store/images/bt_logo.png" alt=""></a>
+            </div>
+            <div id="dashboard">
+                <h2 id="subHeader">Admin Portal</h2>
+                <div id="addGame">
+                    <h3><a href="/admin/add-product">Add new product to the store</a></h3>
+                    <p>Search through a database of games and add that game to the store for customers to purcahse.</p>
+                </div>
+                <div id="searchOrders">
+                    <h3><a href="/admin/orders">Search orders</a></h3>
+                    <p>View and search orders that customers have made and edit those orders if needed.</p>
+                </div>
+                <div id="editGame">
+                    <h3><a href="/admin/edit-game/1">Edit products</a></h3>
+                    <p>View and edit current products on the store.</p>
+                </div>
+            </div>
+        </div>
 </body>
 </html>

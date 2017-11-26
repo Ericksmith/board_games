@@ -7,8 +7,7 @@ import requests
 import xml.etree.ElementTree as ET
 from ..store.models import *
 from .models import *
-from ..login_reg.models import User
-from decimal import Decimal
+import pickle
 
 
 
@@ -35,14 +34,20 @@ def addProduct(request):
 def orders(request):
     if request.session.get('orders') is not None:
         context = {
-            'orders': request.session.get['orders']
+            'orders': pickle.loads(request.session.get('orders'))
         }
         del request.session['orders']
     else:
         context = {
-            'orders': Order.objects.order_by('-id')[:10]
+            'orders': ItemInOrder.objects.order_by('-id')[:10]
         }
     return render(request, 'admin/orders.html', context)
+
+def edit_order(request, order_id):
+    context = {
+        "order": findOneOrder(order_id)
+    }
+    return render(request, "admin/edit_order.html", context)
 
 def edit_game(request, game_id):
     context = {
@@ -73,6 +78,8 @@ def searchProducts(request):
         return redirect(addProduct)
 
 def select_game(request, game_id):
+    ''' Queries the Board game geek API by the game id param and returns
+    that games info as a dictionary to be rendered on the add product page.'''
     resp = requests.get("https://bgg-json.azurewebsites.net/thing/{}".format(game_id))
     game = json.loads(resp.text)
     desc = game['description']
@@ -124,7 +131,6 @@ def create_game(request):
         return redirect(addProduct)
 
 def update_game(request):
-
     if request.method == 'POST':
         errors = Game.objects.validator(request.POST)
         if errors:
@@ -136,7 +142,6 @@ def update_game(request):
             classic = True
         else:
             classic = False
-
         # try:
         update = Game.objects.get(id=data['id'])
         update.title = data['title']
@@ -195,6 +200,13 @@ def orderSearch(request):
             'orderId': orderId(request.POST),
             'game': game(request.POST)
         }
-        request.session['orders'] = searchFunctions[search_type]
-        # Getting an error trying to put results in session
-        return redirect(orders)
+        request.session['orders'] = pickle.dumps(searchFunctions[search_type])
+        return redirect("/admin/orders")
+
+def update_order(request):
+    if request.method == "POST":
+        print(request.POST)
+        orderUpdater(request.POST)
+        return redirect("/admin/edit-order/{}".format(request.POST['orderId']))
+
+    
