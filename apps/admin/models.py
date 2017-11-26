@@ -15,9 +15,9 @@ def cleanDesc(desc):
     desc = desc.replace('&quot;', ' ')
     return desc
 
+#4 functions that the admin picks to search for an order by. 
 def customer(postData):
     return ItemInOrder.objects.filter(order__customer__first_name__contains=postData['search']).all() | ItemInOrder.objects.filter(order__customer__last_name__contains=postData['search']).all()
-    # return Order.objects.filter(customer__first_name__contains=postData['search']).all() | Order.objects.filter(customer__last_name__contains=postData['search']).all()
 
 def dateRange(postData):
     pass
@@ -27,6 +27,18 @@ def orderId(postData):
 
 def game(postData):
     return ItemInOrder.objects.filter(game__title__contains=postData['search']).all()
+
+
+def orderUpdater(postData):
+    order = findOneOrder(postData['orderId'])
+    for key, val in postData.items():
+        if val == "on":
+            print('refund')
+    #unfinished function. Will update order from the edit-order page.
+    #refund will bring the price to zero? Is refund even needed?
+    pass
+
+
 
 def findOneOrder(order_id):
     return Order.objects.get(id=order_id)

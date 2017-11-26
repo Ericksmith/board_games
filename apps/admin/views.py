@@ -7,8 +7,6 @@ import requests
 import xml.etree.ElementTree as ET
 from ..store.models import *
 from .models import *
-from ..login_reg.models import User
-from decimal import Decimal
 import pickle
 
 
@@ -133,7 +131,6 @@ def create_game(request):
         return redirect(addProduct)
 
 def update_game(request):
-
     if request.method == 'POST':
         errors = Game.objects.validator(request.POST)
         if errors:
@@ -145,7 +142,6 @@ def update_game(request):
             classic = True
         else:
             classic = False
-
         # try:
         update = Game.objects.get(id=data['id'])
         update.title = data['title']
@@ -206,3 +202,11 @@ def orderSearch(request):
         }
         request.session['orders'] = pickle.dumps(searchFunctions[search_type])
         return redirect("/admin/orders")
+
+def update_order(request):
+    if request.method == "POST":
+        print(request.POST)
+        orderUpdater(request.POST)
+        return redirect("/admin/edit-order/{}".format(request.POST['orderId']))
+
+    

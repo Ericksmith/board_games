@@ -46,6 +46,7 @@
                 <p>{{order.updated_at}}</p>
             </div>
             <form action="/admin/update-order" id="editOrder" method="post">
+                {% csrf_token %}
                 <label for="status">Order Satus: </label>
                 <select name="status">
                     <option value="Submitted">Submitted</option>
@@ -53,13 +54,14 @@
                     <option value="Complete">Complete</option>
                     <option value="Cancelled">Cancelled</option>
                 </select>
+                <input type="hidden" name="orderId" value="{{order.id}}">
             {% for item in order.items.all %}
                 <hr>
                 <p>{{item.game.title}}</p>
                 <p>Quantity: {{item.quantity}}</p>
                 <p>Base Price: {{item.basePrice}}</p>
                 <label for="price">Price Paid: </label>
-                <input type="text" name="Price" value="{{item.price}}">
+                <input type="text" name="price-{{item.id}}" value="{{item.price}}">
                 <p>Refund: <input type="checkbox" name="refund-{{item.id}}"></p>
             {% endfor %}
             <input type="submit" value="Update Order">
