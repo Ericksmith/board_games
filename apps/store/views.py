@@ -62,7 +62,7 @@ def index(request):
         'sale': random5(Game.objects.exclude(sale_price="")),
         'popular': popular5,
         'classics': random5(Game.objects.filter(classic=1)),
-        'categories': Catagory.objects.all(),
+        'categories': Catagory.objects.order_by("name"),
     }
 
     if 'recently_viewed_ids' in request.session:
@@ -78,11 +78,12 @@ def results(request):
     if 'search_results' in request.session:
         for game_id in request.session['search_results']:
             games.append(Game.objects.get(id=game_id)) 
+            games = sorted(games, key=lambda game: game.title)
     else:
-        games = Game.objects.all()
+        games = Game.objects.order_by("name")
 
     context = {
-        'categories': Catagory.objects.all(),
+        'categories': Catagory.objects.order_by("name"),
         "games": games
     }
 
@@ -105,8 +106,11 @@ def game(request, num):
 
 
     context = {
-        'game': Game.objects.get(id=num)
+        'game': Game.objects.get(id=num),
+        'categories': Game.objects.get(id=num).catagory.order_by('name')
     }
+
+    print context['categories']
 
     return render(request, 'store/game.html', context)
 
@@ -145,11 +149,15 @@ def results_process(request):
         request.session['search_results'] = results
         request.session['search_label'] = Catagory.objects.get(id=request.POST['category_id']).name
 
-
-
-
     return redirect('/results')
 
+def view_all(request):
+    request.session['search_results'] = []
+    games = Game.objects.order_by('title')
+    for game in games:
+        request.session['search_results'].append(game.id)
+    request.session['search_label'] = "All Games"
+    return redirect('/results')
 
 
 

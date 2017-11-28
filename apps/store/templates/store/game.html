@@ -20,7 +20,7 @@
                     <img class='gp_image' src="{{game.image}}" alt="">
                     <h3>Categories</h3>
                     <ul>
-                        {% for cat in game.catagory.all %}
+                        {% for cat in categories %}
                             <li>
                                 <form action="/results_process" method='post'>
                                     {% csrf_token %}

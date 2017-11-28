@@ -11,6 +11,6 @@ urlpatterns = [
     # functions
     url(r'^add_to_cart', views.add_to_cart),
     url(r'^results_process', views.results_process),
-
+    url(r'^view_all', views.view_all),
 
 ]
