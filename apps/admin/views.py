@@ -154,7 +154,7 @@ def update_game(request):
         update.playtime = int(data['playtime'])
         update.description= data['description']
         update.price= data['price']
-        print data
+        print(data)
         if data['sale_price'] == "" or not 'sale_price' in data:
             print "no sale"
             update.sale_price = ''
