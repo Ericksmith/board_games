@@ -17,11 +17,15 @@
                 <h1>Search for a Game</h1>
                 <form action="searchProducts" method="post">
                     {% csrf_token %}
-                    <p>Title: <input type="text" name="search"></p>
-                    <input type="submit" value="Search">
+                    <div class="form-group">
+                        <label for="">Title:</label>
+                        <input type="text" class="form-control" name="search" id="" aria-describedby="helpId" placeholder="">
+                        <small id="helpId" class="form-text text-muted">Enter a name of a board game you would like to add to the store</small>
+                    </div>
+                    <button type="submit" class="btn btn-info">Search</button>
                 </form>
                 {% if games_search %}
-                    <table>
+                    <table class="table mt-3 table-striped">
                         <tr>
                             <th>Title</th>
                             <th>Year</th>
@@ -37,16 +41,16 @@
                     </table>
                 {% endif %}
             </div>
-        <div id='gameField' class="col-6 mt-4">
+        <div id='gameField' class="col-6 mt-4 pb-5">
             {% if selected_game %}
                 <img src="{{selected_game.thumbnail}}" alt="game image">
                 <form action="create-game" method="post">
                     {% if messages %}
-                    <ul class="messages">
-                        {% for message in messages %}
-                        <li class='errorMessage'>{{ message }}</li>
-                        {% endfor %}
-                    </ul>
+                        <ul class="messages">
+                            {% for message in messages %}
+                                <li class='errorMessage'>{{ message }}</li>
+                            {% endfor %}
+                        </ul>
                     {% endif %}
                     {% csrf_token %}
                     <div class="form-group">
@@ -62,23 +66,23 @@
                       <input type="text" class="form-control" value="{{selected_game.yearpublished}}" name="yearpublished" id="" aria-describedby="helpId" placeholder="">
                     </div>
                     <div class="form-group">
-                      <label for="">minplayers:</label>
+                      <label for="">Minplayers:</label>
                       <input type="text" class="form-control" value="{{selected_game.minplayers}}" name="minplayers" id="" aria-describedby="helpId" placeholder="">
                     </div>
                     <div class="form-group">
-                      <label for="">maxplayers:</label>
+                      <label for="">Maxplayers:</label>
                       <input type="text" class="form-control" value="{{selected_game.maxplayers}}" name="maxplayers" id="" aria-describedby="helpId" placeholder="">
                     </div>
                     <div class="form-group">
-                      <label for="">playtime:</label>
+                      <label for="">Playtime:</label>
                       <input type="text" class="form-control" value="{{selected_game.playtime}}" name="playtime" id="" aria-describedby="helpId" placeholder="">
                     </div>
                     <div class="form-group">
-                      <label for="">rating:</label>
+                      <label for="">Rating:</label>
                       <input type="text" class="form-control" value="{{selected_game.rating}}" name="rating" id="" aria-describedby="helpId" placeholder="">
                     </div>
                     <div class="form-group">
-                      <label for="">rank:</label>
+                      <label for="">Rank:</label>
                       <input type="text" class="form-control" value="{{selected_game.rank}}" name="rank" id="" aria-describedby="helpId" placeholder="">
                     </div>
                     <div class="form-group">
