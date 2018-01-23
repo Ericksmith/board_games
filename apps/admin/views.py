@@ -26,9 +26,7 @@ def addProduct(request):
             'games_search': False,
             'selected_game': request.session.get('selected_game')
         }
-
     context['categories'] = Catagory.objects.order_by('name')
-
     return render(request, 'admin/admin_add_game.html', context)
 
 def orders(request):
