@@ -28,7 +28,7 @@ input {
     display: inline-block;
     width: 400px;
     vertical-align: top;
-    margin-right:50px;
+    /* margin-right:50px; */
 }
 
 
@@ -41,14 +41,14 @@ input {
     margin-top: 20px;
 }
 
-table {
+/* table {
     border-collapse: collapse;
 }
 
 table, th, td {
     border: 1px solid black;
     text-align: center;
-}
+} */
 
 #gameRow{
     width: 350px;

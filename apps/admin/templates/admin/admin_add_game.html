@@ -5,60 +5,105 @@
        <title>Add Game</title>
         {% load static %}
         <link rel="stylesheet" href="{% static 'admin/css/admin-styles.css' %}">
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/css/bootstrap.min.css" integrity="sha384-rwoIResjU2yc3z8GV/NPeZWAv56rSmLldC3R/AZzGRnGxQQKnKkoFVhFQhNUwEyJ" crossorigin="anonymous">
     </head>
     <body>
         <div id='wrapper'>
             <div id='topbar'>
-                    <a href="/"><img id='logo' src="../static/store/images/bt_logo.png" alt=""></a>
-                </div>
-            <div id='searchField'>
-            <h1>Search for a Game</h1>
-            <form action="searchProducts" method="post">
-                {% csrf_token %}
-                <p>Title: <input type="text" name="search"></p>
-                <input type="submit" value="Search">
-            </form>
-            {% if games_search %}
-                <table>
-                    <tr>
-                        <th>Title</th>
-                        <th>Year</th>
-                        <th>BGG id</th>
-                    </tr>
-                    {% for game in games_search %}
-                        <tr>
-                            <td><a href="/admin/select-game/{{game.id}}">{{game.title}}</a></td>
-                            <td>{{game.year_published}}</td>
-                            <td>{{game.id}}</td>
-                        </tr>
-                    {% endfor %}
-                </table>
-            {% endif %}
+                <a href="/"><img id='logo' src="../static/store/images/bt_logo.png" alt=""></a>
             </div>
-        <div id='gameField'>
+        <div class="row">
+            <div id='searchField' class="col-6 mt-4">
+                <h1>Search for a Game</h1>
+                <form action="searchProducts" method="post">
+                    {% csrf_token %}
+                    <div class="form-group">
+                        <label for="">Title:</label>
+                        <input type="text" class="form-control" name="search" id="" aria-describedby="helpId" placeholder="">
+                        <small id="helpId" class="form-text text-muted">Enter a name of a board game you would like to add to the store</small>
+                    </div>
+                    <button type="submit" class="btn btn-info">Search</button>
+                </form>
+                {% if games_search %}
+                    <table class="table mt-3 table-striped">
+                        <tr>
+                            <th>Title</th>
+                            <th>Year</th>
+                            <th>BGG id</th>
+                        </tr>
+                        {% for game in games_search %}
+                            <tr>
+                                <td><a href="/admin/select-game/{{game.id}}">{{game.title}}</a></td>
+                                <td>{{game.year_published}}</td>
+                                <td>{{game.id}}</td>
+                            </tr>
+                        {% endfor %}
+                    </table>
+                {% endif %}
+            </div>
+        <div id='gameField' class="col-6 mt-4 pb-5">
             {% if selected_game %}
                 <img src="{{selected_game.thumbnail}}" alt="game image">
                 <form action="create-game" method="post">
                     {% if messages %}
-                    <ul class="messages">
-                        {% for message in messages %}
-                        <li class='errorMessage'>{{ message }}</li>
-                        {% endfor %}
-                    </ul>
+                        <ul class="messages">
+                            {% for message in messages %}
+                                <li class='errorMessage'>{{ message }}</li>
+                            {% endfor %}
+                        </ul>
                     {% endif %}
                     {% csrf_token %}
-                    <p>Title: <input type="text" name="title" value="{{selected_game.title}}"></p>
-                    <p>Publisher: <input type="text" name="publisher" value="{{selected_game.publisher}}"></p>
-                    <p>Year: <input type="text" name="yearpublished" value="{{selected_game.yearpublished}}"></p>
-                    <p>minplayers: <input type="text" name="minplayers" value="{{selected_game.minplayers}}"></p>
-                    <p>maxplayers: <input type="text" name="maxplayers" value="{{selected_game.maxplayers}}"></p>
-                    <p>playtime: <input type="text" name="playtime" value="{{selected_game.playtime}}"></p>
-                    <p>rating: <input type="text" name="rating" value="{{selected_game.rating}}"></p>
-                    <p>rank: <input type="text" name="rank" value="{{selected_game.rank}}"></p>
-                    <p>Description: <textarea name="description" cols="30" rows="10">{{selected_game.description}}</textarea></p>
-                    <p>Price: <input type="text" name="price"></p>
-                    <p>Sale Price: <input type="text" name="sale_price"> leave blank if not on sale</p>
-                    <p>Classic <input type="checkbox" name="classic" value='True'></p>
+                    <div class="form-group">
+                      <label for="">Title:</label>
+                      <input type="text" class="form-control" value="{{selected_game.title}}" name="title" id="" aria-describedby="helpId" placeholder="">
+                    </div>
+                    <div class="form-group">
+                      <label for="">Publisher:</label>
+                      <input type="text" class="form-control" value="{{selected_game.publisher}}" name="publisher" id="" aria-describedby="helpId" placeholder="">
+                    </div>
+                    <div class="form-group">
+                      <label for="">Year:</label>
+                      <input type="text" class="form-control" value="{{selected_game.yearpublished}}" name="yearpublished" id="" aria-describedby="helpId" placeholder="">
+                    </div>
+                    <div class="form-group">
+                      <label for="">Minplayers:</label>
+                      <input type="text" class="form-control" value="{{selected_game.minplayers}}" name="minplayers" id="" aria-describedby="helpId" placeholder="">
+                    </div>
+                    <div class="form-group">
+                      <label for="">Maxplayers:</label>
+                      <input type="text" class="form-control" value="{{selected_game.maxplayers}}" name="maxplayers" id="" aria-describedby="helpId" placeholder="">
+                    </div>
+                    <div class="form-group">
+                      <label for="">Playtime:</label>
+                      <input type="text" class="form-control" value="{{selected_game.playtime}}" name="playtime" id="" aria-describedby="helpId" placeholder="">
+                    </div>
+                    <div class="form-group">
+                      <label for="">Rating:</label>
+                      <input type="text" class="form-control" value="{{selected_game.rating}}" name="rating" id="" aria-describedby="helpId" placeholder="">
+                    </div>
+                    <div class="form-group">
+                      <label for="">Rank:</label>
+                      <input type="text" class="form-control" value="{{selected_game.rank}}" name="rank" id="" aria-describedby="helpId" placeholder="">
+                    </div>
+                    <div class="form-group">
+                      <label for="">Description:</label>
+                      <textarea class="form-control" name="description" id="" rows="9">{{selected_game.description}}</textarea>
+                    </div>
+                    <div class="form-group">
+                        <label for="">Price:</label>
+                        <input type="text" class="form-control" name="price" id="" aria-describedby="helpId" placeholder="">
+                    </div>
+                    <div class="form-group">
+                        <label for="">Sale Price:</label>
+                        <input type="text" class="form-control" name="sale_price" id="" aria-describedby="helpId" placeholder="">
+                        <small id="helpId" class="form-text text-muted">Leave blank if not on sale</small>
+                    </div>
+                    <div class="form-check">
+                      <label class="form-check-label">
+                        <input type="checkbox" class="form-check-input" name="classic" id="" value="True">
+                        Classic
+                      </label>
+                    </div>
                     <p>Categories:<br>       
                         {% for cat in categories %}
                             <input type="checkbox" name="category" value='{{cat.id}}'>{{cat.name}}<br>
@@ -66,10 +111,14 @@
                     </p>
                     <input type="hidden" name="thumbnail" value='{{selected_game.thumbnail}}'>
                     <input type="hidden" name="image" value='{{selected_game.image}}'>
-                    <input type="submit" value="Add game to database">
+                    <button type="submit" class="btn btn-success">Add game to database</button>
                 </form>
             {% endif %}
         </div>
         </div>
+        </div>
+        <script src="https://code.jquery.com/jquery-3.1.1.slim.min.js" integrity="sha384-A7FZj7v+d/sdmMqp/nOQwliLvUsJfDHW+k9Omg/a/EheAdgtzNs3hpfag6Ed950n" crossorigin="anonymous"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/tether/1.4.0/js/tether.min.js" integrity="sha384-DztdAPBWPRXSA/3eYEEUWrWCy7G5KFbe8fFjk5JAIxUYHKkDx6Qin1DkWx51bBrb" crossorigin="anonymous"></script>
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/js/bootstrap.min.js" integrity="sha384-vBWWzlZJ8ea9aCX4pEW3rVHjgjt7zpkNpZk+02D9phzyeVkE+jo0ieGizqPLForn" crossorigin="anonymous"></script>
     </body>
 </html>

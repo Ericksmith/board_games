@@ -3,6 +3,9 @@ from __future__ import unicode_literals
 from django.db import models
 from ..login_reg.models import User
 from ..store.models import Order, Game, ItemInOrder
+import requests
+import xml.etree.ElementTree as ET
+import json
 
 # Create your models here.
 
@@ -27,6 +30,47 @@ def orderId(postData):
 
 def game(postData):
     return ItemInOrder.objects.filter(game__title__contains=postData['search']).all()
+
+#api functions
+def apiSearch(postData):
+    # Searches BBG api for a game and return a list of matching games
+    # postData = a name of a game the admin enters
+    searchResults = requests.get("https://www.boardgamegeek.com/xmlapi/search?search={}".format(postData['search']))
+    root = ET.fromstring(searchResults.content)
+    games_list = []
+    for game in root:
+        title = game.find('name').text
+        try:
+            year_published = game.find('yearpublished').text
+        except:
+            year_published = 'Unknown'
+        id = game.attrib['objectid']
+        games_list.append({
+            'id' : id,
+            'title': title,
+            'year_published' : year_published,
+        })
+    return games_list
+
+def api_game_select(game_id):
+    resp = requests.get("https://bgg-json.azurewebsites.net/thing/{}".format(game_id))
+    game = json.loads(resp.text)
+    desc = game['description']
+    desc = cleanDesc(desc)
+    game_to_add = {
+        'playtime': game['playingTime'],
+        'minplayers': game['minPlayers'],
+        'maxplayers': game['maxPlayers'],
+        'description': desc,
+        'thumbnail': game['thumbnail'],
+        'image': game['image'],
+        'yearpublished': game['yearPublished'],
+        'title': game['name'],
+        'publisher': game['publishers'][0],
+        'rating': str(int(game['bggRating'])),
+        'rank': game['rank']
+    }
+    return game_to_add
 
 
 def orderUpdater(postData):
