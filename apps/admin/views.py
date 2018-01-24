@@ -63,24 +63,7 @@ def searchProducts(request):
 def select_game(request, game_id):
     ''' Queries the Board game geek API by the game id param and returns
     that games info as a dictionary to be rendered on the add product page.'''
-    resp = requests.get("https://bgg-json.azurewebsites.net/thing/{}".format(game_id))
-    game = json.loads(resp.text)
-    desc = game['description']
-    desc = cleanDesc(desc)
-    game_to_add = {
-        'playtime': game['playingTime'],
-        'minplayers': game['minPlayers'],
-        'maxplayers': game['maxPlayers'],
-        'description': desc,
-        'thumbnail': game['thumbnail'],
-        'image': game['image'],
-        'yearpublished': game['yearPublished'],
-        'title': game['name'],
-        'publisher': game['publishers'][0],
-        'rating': str(int(game['bggRating'])),
-        'rank': game['rank']
-    }
-    request.session['selected_game'] = game_to_add
+    request.session['selected_game'] = api_game_select(game_id)
     return redirect(addProduct)
 
 
@@ -137,14 +120,9 @@ def update_game(request):
         update.playtime = int(data['playtime'])
         update.description= data['description']
         update.price= data['price']
-        print(data)
         if data['sale_price'] == "" or not 'sale_price' in data:
-            print "no sale"
             update.sale_price = ''
         else:
-            print "sale exists"
-            print update.sale_price
-            print str(data['sale_price'])
             update.sale_price = str(data['sale_price'])
         update.classic = classic
         update.save()
