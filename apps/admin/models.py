@@ -3,6 +3,8 @@ from __future__ import unicode_literals
 from django.db import models
 from ..login_reg.models import User
 from ..store.models import Order, Game, ItemInOrder
+import requests
+import xml.etree.ElementTree as ET
 
 # Create your models here.
 
@@ -27,6 +29,25 @@ def orderId(postData):
 
 def game(postData):
     return ItemInOrder.objects.filter(game__title__contains=postData['search']).all()
+
+def apiSearch(searchResults):
+    # Searches BBG api for a game and return a list of matching games
+    # SearchResults = a name of a game the admin enters
+    root = ET.fromstring(searchResults.content)
+    games_list = []
+    for game in root:
+        title = game.find('name').text
+        try:
+            year_published = game.find('yearpublished').text
+        except:
+            year_published = 'Unknown'
+        id = game.attrib['objectid']
+        games_list.append({
+            'id' : id,
+            'title': title,
+            'year_published' : year_published,
+        })
+    return games_list
 
 
 def orderUpdater(postData):

@@ -58,21 +58,7 @@ def edit_game(request, game_id):
 def searchProducts(request):
     if request.method == 'POST':
         searchResults = requests.get("https://www.boardgamegeek.com/xmlapi/search?search={}".format(request.POST['search']))
-        root = ET.fromstring(searchResults.content)
-        games_list = []
-        for game in root:
-            title = game.find('name').text
-            try:
-                year_published = game.find('yearpublished').text
-            except:
-                year_published = 'Unknown'
-            id = game.attrib['objectid']
-            games_list.append({
-                'id' : id,
-                'title': title,
-                'year_published' : year_published,
-            })
-            request.session['games_search'] = games_list
+        request.session['games_search'] = apiSearch(searchResults)
         return redirect(addProduct)
 
 def select_game(request, game_id):
