@@ -57,8 +57,7 @@ def edit_game(request, game_id):
 #Form processing
 def searchProducts(request):
     if request.method == 'POST':
-        searchResults = requests.get("https://www.boardgamegeek.com/xmlapi/search?search={}".format(request.POST['search']))
-        request.session['games_search'] = apiSearch(searchResults)
+        request.session['games_search'] = apiSearch(request.POST)
         return redirect(addProduct)
 
 def select_game(request, game_id):

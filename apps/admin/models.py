@@ -30,9 +30,10 @@ def orderId(postData):
 def game(postData):
     return ItemInOrder.objects.filter(game__title__contains=postData['search']).all()
 
-def apiSearch(searchResults):
+def apiSearch(postData):
     # Searches BBG api for a game and return a list of matching games
-    # SearchResults = a name of a game the admin enters
+    # postData = a name of a game the admin enters
+    searchResults = requests.get("https://www.boardgamegeek.com/xmlapi/search?search={}".format(postData['search']))
     root = ET.fromstring(searchResults.content)
     games_list = []
     for game in root:
