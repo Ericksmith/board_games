@@ -26,7 +26,9 @@ def dateRange(postData):
     pass
 
 def orderId(postData):
-    return ItemInOrder.objects.filter(order__id=int(postData['search']))
+    if postData['search'].isdigit():
+        return ItemInOrder.objects.filter(order__id=int(postData['search']))
+    return {}
 
 def game(postData):
     return ItemInOrder.objects.filter(game__title__contains=postData['search']).all()
@@ -35,6 +37,7 @@ def game(postData):
 def apiSearch(postData):
     # Searches BBG api for a game and return a list of matching games
     # postData = a name of a game the admin enters
+    print "apiSearch"
     searchResults = requests.get("https://www.boardgamegeek.com/xmlapi/search?search={}".format(postData['search']))
     root = ET.fromstring(searchResults.content)
     games_list = []
