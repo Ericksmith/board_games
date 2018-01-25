@@ -156,12 +156,13 @@ def orderSearch(request):
     if request.method == 'POST':
         search_type = request.POST['search_type']
         searchFunctions = {
-            'customer': customer(request.POST),
-            'dateRange': dateRange(request.POST),
-            'orderId': orderId(request.POST),
-            'game': game(request.POST)
+            'customer': customer,
+            'dateRange': dateRange,
+            'orderId': orderId,
+            'game': game
         }
-        request.session['orders'] = pickle.dumps(searchFunctions[search_type])
+        # request.session['orders'] = pickle.dumps(customer(request.POST))
+        request.session['orders'] = pickle.dumps(searchFunctions[search_type](request.POST))
         return redirect("/admin/orders")
 
 def update_order(request):
